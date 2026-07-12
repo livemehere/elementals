@@ -4,4 +4,16 @@ project(ElementalsProject LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(Elementals src/main.cpp)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+
+add_executable(Elementals src/main.cpp
+        src/Window.cpp
+        src/Window.h)
+
+target_link_libraries(Elementals PRIVATE
+        glfw
+        glad::glad
+        imgui::imgui
+)
