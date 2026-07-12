@@ -1,0 +1,15 @@
+{
+  "version-string": "0.0.1",
+  "name": "elementals",
+  "dependencies": [
+    "glfw3",
+    "glad",
+    {
+      "name": "imgui",
+      "features": [
+        "glfw-binding",
+        "opengl3-binding"
+      ]
+    }
+  ]
+}
