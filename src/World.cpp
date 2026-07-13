@@ -11,6 +11,7 @@ World::World() {
 
     // shader
     GLint shaderProgram = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
+    glUseProgram(shaderProgram);
 
 }
 

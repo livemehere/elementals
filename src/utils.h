@@ -24,12 +24,12 @@ namespace utils {
     }
 
     inline GLuint compile_shader(const GLenum type, const std::string& filepath) {
-        const std::string source_path = asset_path(filepath);
-        const std::string source_string = read_file(source_path);
-        const char* shader_source = source_string.c_str();
+        const std::string sourcePath = asset_path(filepath);
+        const std::string sourceString = read_file(sourcePath);
+        const char* shaderSource = sourceString.c_str();
 
         const GLuint shader = glCreateShader(type);
-        glShaderSource(shader, 1, &shader_source, nullptr);
+        glShaderSource(shader, 1, &shaderSource, nullptr);
         glCompileShader(shader);
 
         GLint success = GL_FALSE;
@@ -38,42 +38,46 @@ namespace utils {
             return shader;
         }
 
-        std::string shader_type_str = type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
+        std::string shaderTypeStr = type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
         // failed case
 
-        GLint log_length = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
-        std::string log(log_length,'\0');
+        GLint logLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
+        std::string log(logLength,'\0');
 
         GLsizei written = 0;
-        glGetShaderInfoLog(shader, log_length, &written, log.data());
+        glGetShaderInfoLog(shader, logLength, &written, log.data());
         log.resize(written);
 
-        throw std::runtime_error(std::format("[{} SHADER] {}",shader_type_str, log));
+        throw std::runtime_error(std::format("[{} SHADER] {}",shaderTypeStr, log));
     }
 
     inline GLint create_shader_program(const std::string& vsPath, const std::string& fsPath) {
         GLint vs = compile_shader(GL_VERTEX_SHADER,vsPath);
         GLint fs = compile_shader(GL_FRAGMENT_SHADER,fsPath);
 
-        GLint shader_program = glCreateProgram();
-        glAttachShader(shader_program, vs);
-        glAttachShader(shader_program, fs);
-        glLinkProgram(shader_program);
+        GLint program = glCreateProgram();
+        glAttachShader(program, vs);
+        glAttachShader(program, fs);
+        glLinkProgram(program);
 
         GLint success = GL_FALSE;
-        glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+        glGetProgramiv(program, GL_LINK_STATUS, &success);
+
+        glDeleteShader(vs);
+        glDeleteShader(fs);
+
         if (success == GL_TRUE) {
-            return shader_program;
+            return program;
         }
 
         // failed case
-        GLint log_length = 0;
-        glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &log_length);
-        std::string log(log_length,'\0');
+        GLint logLength = 0;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+        std::string log(logLength,'\0');
 
         GLsizei written = 0;
-        glGetProgramInfoLog(shader_program, log_length, &written, log.data());
+        glGetProgramInfoLog(program, logLength, &written, log.data());
         log.resize(written);
 
         throw std::runtime_error(std::format("[SHADER_PROGRAM] {}", log));
