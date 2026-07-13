@@ -36,5 +36,5 @@ void World::update() {
 void World::render() {
     glUseProgram(program);
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size());
 }
