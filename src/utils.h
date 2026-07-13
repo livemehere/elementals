@@ -52,11 +52,11 @@ namespace utils {
         throw std::runtime_error(std::format("[{} SHADER] {}",shaderTypeStr, log));
     }
 
-    inline GLint create_shader_program(const std::string& vsPath, const std::string& fsPath) {
-        GLint vs = compile_shader(GL_VERTEX_SHADER,vsPath);
-        GLint fs = compile_shader(GL_FRAGMENT_SHADER,fsPath);
+    inline GLuint create_shader_program(const std::string& vsPath, const std::string& fsPath) {
+        GLuint vs = compile_shader(GL_VERTEX_SHADER,vsPath);
+        GLuint fs = compile_shader(GL_FRAGMENT_SHADER,fsPath);
 
-        GLint program = glCreateProgram();
+        GLuint program = glCreateProgram();
         glAttachShader(program, vs);
         glAttachShader(program, fs);
         glLinkProgram(program);

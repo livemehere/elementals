@@ -2,6 +2,12 @@
 #include <iostream>
 #include <format>
 
+#include <glad/glad.h>
+
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 namespace {
     void error_callback(int error, const char* desc) {
         std::cout << std::format("Error: {}", desc) << std::endl;
@@ -41,7 +47,7 @@ Window::~Window() {
 void Window::init() {
     if (!glfwInit()) {
         std::cout << "glfw init failed" << std::endl;
-        exit(-1);
+        throw std::runtime_error("Failed to init GLFW");
     }
     glfwSetErrorCallback(error_callback);
 }

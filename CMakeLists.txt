@@ -23,6 +23,7 @@ target_link_libraries(Elementals PRIVATE
         imgui::imgui
 )
 
+# TODO: COPY asset file to packaging.
 target_compile_definitions(Elementals PRIVATE
         ASSET_ROOT="${CMAKE_SOURCE_DIR}/assets"
 )

@@ -1,7 +1,9 @@
 #include <iostream>
+#include <imgui.h>
 
 #include "Window.h"
 #include "World.h"
+
 
 int main() {
 
@@ -29,6 +31,7 @@ int main() {
         }
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
+        return -1;
     }
 
     return 0;

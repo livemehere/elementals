@@ -5,9 +5,6 @@
 #include "utils.h"
 
 World::World() {
-    // shader
-    program = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
-
     // VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -21,9 +18,16 @@ World::World() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, x));
     glEnableVertexAttribArray(0);
 
+    // shader
+    program = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
+    glUseProgram(program);
+
 }
 
 World::~World() {
+    glDeleteProgram(program);
+    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &VAO);
 }
 
 void World::update() {
