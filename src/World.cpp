@@ -10,8 +10,7 @@ World::World() {
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 
     // shader
-     GLint vs = utils::compile_shader(GL_VERTEX_SHADER,"shaders/basic.vert");
-
+    GLint shaderProgram = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
 
 }
 

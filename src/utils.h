@@ -1,6 +1,5 @@
 #pragma once
 
-#include <expected>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -14,6 +13,11 @@ namespace utils {
 
     inline std::string read_file(const std::string& filepath) {
         std::ifstream file(filepath);
+
+        if (!file.is_open()) {
+            throw std::runtime_error(std::format("Failed to open file : {}", filepath));
+        }
+
         std::stringstream ss;
         ss << file.rdbuf();
         return ss.str();
@@ -46,6 +50,33 @@ namespace utils {
         log.resize(written);
 
         throw std::runtime_error(std::format("[{} SHADER] {}",shader_type_str, log));
+    }
+
+    inline GLint create_shader_program(const std::string& vsPath, const std::string& fsPath) {
+        GLint vs = compile_shader(GL_VERTEX_SHADER,vsPath);
+        GLint fs = compile_shader(GL_FRAGMENT_SHADER,fsPath);
+
+        GLint shader_program = glCreateProgram();
+        glAttachShader(shader_program, vs);
+        glAttachShader(shader_program, fs);
+        glLinkProgram(shader_program);
+
+        GLint success = GL_FALSE;
+        glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+        if (success == GL_TRUE) {
+            return shader_program;
+        }
+
+        // failed case
+        GLint log_length = 0;
+        glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &log_length);
+        std::string log(log_length,'\0');
+
+        GLsizei written = 0;
+        glGetProgramInfoLog(shader_program, log_length, &written, log.data());
+        log.resize(written);
+
+        throw std::runtime_error(std::format("[SHADER_PROGRAM] {}", log));
     }
 
 }
