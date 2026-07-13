@@ -17,10 +17,10 @@ private:
        { -1.0f, 1.0f, 0.0f}, // left top
        { 1.0f, 1.0f, 0.0f}, // right top
    };
-    std::vector<int> indices = {
-       0,1,2,
-       1,2,3
-    };
+   std::vector<GLuint> indices = {
+       0, 1, 2,
+       1, 3, 2
+   };
 
     GLuint VAO;
     GLuint VBO;

@@ -17,7 +17,7 @@ World::World() {
     // EBO
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
     // layout
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, x));
@@ -27,8 +27,14 @@ World::World() {
     program = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
     glUseProgram(program);
 
-    // render as wireframe
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // render as wireframe
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // disable back-face
+    // NOTE: if two size object needed, turn of culling
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+    glCullFace(GL_BACK);
 
 }
 
