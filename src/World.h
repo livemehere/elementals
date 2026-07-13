@@ -16,7 +16,9 @@ private:
        { 1.0f, -1.0f, 1.0f}, // right bottom
    };
 
+    GLuint VAO;
     GLuint VBO;
+    GLuint program;
 
 public:
     World();
