@@ -54,6 +54,10 @@ private:
     float y = 0.0f;
     float z = 1.0f;
 
+    // rotation
+    float rx = 0.0f;
+    float ry = 0.0f;
+    float rz = 45.0f;
 
     GLuint VAO;
     GLuint VBO;
