@@ -3,6 +3,8 @@
 #include <vector>
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+
 struct Position {
     float x;
     float y;
@@ -22,10 +24,10 @@ struct Vertex {
 class World {
 private:
    std::vector<Vertex> vertices = {
-       {{ -1.0f, -1.0f, 0.0f}, {0.0f,0.0f}}, // left bottom
-       {{ 1.0f, -1.0f, 0.0f}, {1.0f, 0.0f}}, // right bottom
-       {{ -1.0f, 1.0f, 0.0f}, {0.0f, 1.0f}}, // left top
-       {{ 1.0f, 1.0f, 0.0f}, {1.0f, 1.0f}}, // right top
+       {{ -0.5f, -0.5f, 0.0f}, {0.0f,0.0f}}, // left bottom
+       {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}}, // right bottom
+       {{ -0.5f, 0.5f, 0.0f}, {0.0f, 1.0f}}, // left top
+       {{ 0.5f, 0.5f, 0.0f}, {1.0f, 1.0f}}, // right top
    };
    std::vector<GLuint> indices = {
        0, 1, 2,
@@ -40,6 +42,18 @@ private:
         0,0,255,80,
         80,80,80,80,
     };
+
+    // model
+    GLuint modelLocation;
+
+    // transform
+    glm::mat4 transform;
+
+    // position
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 1.0f;
+
 
     GLuint VAO;
     GLuint VBO;

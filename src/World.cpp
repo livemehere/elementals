@@ -4,6 +4,9 @@
 #include <vector>
 #include "utils.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 World::World() {
     // VAO
     glGenVertexArrays(1, &VAO);
@@ -29,6 +32,8 @@ World::World() {
     // shader
     program = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
     glUseProgram(program);
+    modelLocation = glGetUniformLocation(program, "uModel");
+
 
     // texture
     glGenTextures(1, &texture);
@@ -67,6 +72,9 @@ World::~World() {
 }
 
 void World::update() {
+    transform = glm::mat4(1.0f);
+    transform = glm::translate(transform, glm::vec3(x, y, z));
+    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(transform));
 }
 
 void World::render() {
