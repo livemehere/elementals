@@ -1,5 +1,6 @@
 #include "World.h"
 
+#include <imgui.h>
 #include <iostream>
 #include <vector>
 
@@ -76,9 +77,7 @@ World::~World() {
 }
 
 void World::update() {
-
     transform.rotation.z = glfwGetTime() * 20;
-    viewTransform.position.x = 1.0f;
 
     /* MODEL */
     model = glm::mat4(1.0f);
@@ -99,7 +98,14 @@ void World::update() {
     /* VIEW */
     view = glm::mat4(1.0f);
     view = glm::translate(view, viewTransform.position);
+
+    view = glm::rotate(view,glm::radians(viewTransform.rotation.x),glm::vec3(1.0f,0.0f,0.0f));
+    view = glm::rotate(view,glm::radians(viewTransform.rotation.y),glm::vec3(0.0f,1.0f,0.0f));
+    view = glm::rotate(view,glm::radians(viewTransform.rotation.z),glm::vec3(0.0f,0.0f,1.0f));
+
     view = glm::inverse(view);
+
+
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 }
 
@@ -108,4 +114,9 @@ void World::render() {
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT,0);
+
+    ImGui::Begin("Camera");
+    ImGui::DragFloat3("position", glm::value_ptr(viewTransform.position), 0.01f);
+    ImGui::DragFloat3("rotation", glm::value_ptr(viewTransform.rotation), 1.0f);
+    ImGui::End();
 }
