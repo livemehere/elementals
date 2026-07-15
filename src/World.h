@@ -9,14 +9,14 @@ struct Position {
     float z;
 };
 
-struct UVCoord {
+struct TexCoord {
    float u;
-    float v;
+   float v;
 };
 
 struct Vertex {
     Position position;
-    UVCoord uvCoord;
+    TexCoord texCoord;
 };
 
 class World {
