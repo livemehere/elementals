@@ -26,10 +26,17 @@ private:
        1, 3, 2
    };
 
+    int textureW = 1;
+    int textureH = 1;
+    std::vector<uint8_t> pixel = {
+        255,255,255,255
+    };
+
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
     GLuint program;
+    GLuint texture;
 
 public:
     World();
