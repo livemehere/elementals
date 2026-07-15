@@ -75,6 +75,11 @@ void Window::create_window(int w, int h, const std::string &title, bool vsync) {
 
     // imgui
     imgui_init(window);
+
+    // OpenGL setup
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }
 
 bool Window::should_close() const {
