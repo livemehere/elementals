@@ -21,6 +21,13 @@ struct Vertex {
     TexCoord texCoord;
 };
 
+
+struct Transform {
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 scale;
+};
+
 class World {
 private:
    std::vector<Vertex> vertices = {
@@ -45,19 +52,14 @@ private:
 
     // model
     GLuint modelLocation;
+    glm::mat4 model;
 
     // transform
-    glm::mat4 transform;
-
-    // position
-    float x = 0.0f;
-    float y = 0.0f;
-    float z = 1.0f;
-
-    // rotation
-    float rx = 0.0f;
-    float ry = 0.0f;
-    float rz = 45.0f;
+    Transform transform {
+        .position = {0.0f,0.0f,0.0f},
+        .rotation = {0.0f,0.0f,0.0f},
+        .scale = {1.0f,1.0f,1.0f},
+    };
 
     GLuint VAO;
     GLuint VBO;

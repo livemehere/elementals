@@ -76,19 +76,22 @@ World::~World() {
 
 void World::update() {
 
-    rz = glfwGetTime() * 20;
+    transform.rotation.z = glfwGetTime() * 20;
 
-    transform = glm::mat4(1.0f);
+    model = glm::mat4(1.0f);
 
     // position
-    transform = glm::translate(transform, glm::vec3(x, y, z));
+    model = glm::translate(model, transform.position);
 
     // rotation
-    transform = glm::rotate(transform,glm::radians(rx),glm::vec3(1.0f,0.0f,0.0f));
-    transform = glm::rotate(transform,glm::radians(ry),glm::vec3(0.0f,1.0f,0.0f));
-    transform = glm::rotate(transform,glm::radians(rz),glm::vec3(0.0f,0.0f,1.0f));
+    model = glm::rotate(model,glm::radians(transform.rotation.x),glm::vec3(1.0f,0.0f,0.0f));
+    model = glm::rotate(model,glm::radians(transform.rotation.y),glm::vec3(0.0f,1.0f,0.0f));
+    model = glm::rotate(model,glm::radians(transform.rotation.z),glm::vec3(0.0f,0.0f,1.0f));
 
-    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(transform));
+    // scale
+    model = glm::scale(model, transform.scale);
+
+    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
 }
 
 void World::render() {
