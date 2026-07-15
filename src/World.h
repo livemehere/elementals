@@ -61,6 +61,15 @@ private:
         .scale = {1.0f,1.0f,1.0f},
     };
 
+    // view
+    GLuint viewLocation;
+    glm::mat4 view;
+    Transform viewTransform {
+        .position = {0.0f,0.0f,0.0f},
+        .rotation = {0.0f,0.0f,0.0f},
+        .scale = {1.0f,1.0f,1.0f},
+    };
+
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;

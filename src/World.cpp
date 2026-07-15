@@ -36,6 +36,7 @@ World::World() {
     program = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
     glUseProgram(program);
     modelLocation = glGetUniformLocation(program, "uModel");
+    viewLocation = glGetUniformLocation(program, "uView");
 
 
     // texture
@@ -77,7 +78,9 @@ World::~World() {
 void World::update() {
 
     transform.rotation.z = glfwGetTime() * 20;
+    viewTransform.position.x = 1.0f;
 
+    /* MODEL */
     model = glm::mat4(1.0f);
 
     // position
@@ -92,6 +95,12 @@ void World::update() {
     model = glm::scale(model, transform.scale);
 
     glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+
+    /* VIEW */
+    view = glm::mat4(1.0f);
+    view = glm::translate(view, viewTransform.position);
+    view = glm::inverse(view);
+    glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 }
 
 void World::render() {
