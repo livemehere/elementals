@@ -77,8 +77,6 @@ World::~World() {
 }
 
 void World::update() {
-    transform.rotation.z = glfwGetTime() * 20;
-
     /* MODEL */
     model = glm::mat4(1.0f);
 

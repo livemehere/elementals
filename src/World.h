@@ -53,8 +53,6 @@ private:
     // model
     GLuint modelLocation;
     glm::mat4 model;
-
-    // transform
     Transform transform {
         .position = {0.0f,0.0f,0.0f},
         .rotation = {0.0f,0.0f,0.0f},
