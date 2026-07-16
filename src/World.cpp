@@ -82,10 +82,14 @@ void World::update() {
     auto size = window.get_size();
 
 
+    // for 2D
     transform.position.x = size.fb_w/2;
     transform.position.y = size.fb_h/2;
     transform.scale.x = 200.0f;
     transform.scale.y = 200.0f;
+
+    // for 3D
+    transform.position.z = -1.0f;
 
     /* MODEL */
     model = glm::mat4(1.0f);
@@ -115,26 +119,36 @@ void World::update() {
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
     /* PROJECTION */
-    projection = glm::ortho(0.0f,(float)size.fb_w,0.0f,(float)size.fb_h);
+   projection = glm::ortho(0.0f,(float)size.fb_w,0.0f,(float)size.fb_h);
+    // projection = glm::perspective(glm::radians(45.0f),(float)(size.w/ size.h), 0.1f, 1000.0f);
+
     glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 
     /* INPUT HANDLES */
     auto native_window = window.get();
+    constexpr float moveStep = 0.01f;
     // view move
     if (glfwGetKey(native_window, GLFW_KEY_A) == GLFW_PRESS) {
-       viewTransform.position.x -= 5.0f;
+       viewTransform.position.x -=moveStep;
     }
     if (glfwGetKey(native_window, GLFW_KEY_D) == GLFW_PRESS) {
-        viewTransform.position.x += 5.0f;
+        viewTransform.position.x +=moveStep;
     }
     if (glfwGetKey(native_window, GLFW_KEY_W) == GLFW_PRESS) {
-        viewTransform.position.y += 5.0f;
+        viewTransform.position.y +=moveStep;
     }
     if (glfwGetKey(native_window, GLFW_KEY_S) == GLFW_PRESS) {
-        viewTransform.position.y -= 5.0f;
+        viewTransform.position.y -=moveStep;
     }
 
+    if (glfwGetKey(native_window, GLFW_KEY_E) == GLFW_PRESS) {
+        viewTransform.position.z -=moveStep;
+    }
+
+    if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
+        viewTransform.position.z +=moveStep;
+    }
 }
 
 void World::render() {
