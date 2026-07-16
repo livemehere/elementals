@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Window.h"
+
 struct Position {
     float x;
     float y;
@@ -30,6 +32,8 @@ struct Transform {
 
 class World {
 private:
+   Window& window;
+
    std::vector<Vertex> vertices = {
        {{ -0.5f, -0.5f, 0.0f}, {0.0f,0.0f}}, // left bottom
        {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}}, // right bottom
@@ -68,6 +72,10 @@ private:
         .scale = {1.0f,1.0f,1.0f},
     };
 
+    // projection
+    GLuint projectionLocation;
+    glm::mat4 projection;
+
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
@@ -75,7 +83,7 @@ private:
     GLuint texture;
 
 public:
-    World();
+    World(Window& window);
     ~World();
 
     void update();

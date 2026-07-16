@@ -11,7 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-World::World() {
+World::World(Window& window) : window(window) {
     // VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -38,6 +38,7 @@ World::World() {
     glUseProgram(program);
     modelLocation = glGetUniformLocation(program, "uModel");
     viewLocation = glGetUniformLocation(program, "uView");
+    projectionLocation = glGetUniformLocation(program, "uProjection");
 
 
     // texture
@@ -63,9 +64,9 @@ World::World() {
 
     // disable back-face
     // NOTE: if two size object needed, turn of culling
-    glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CCW);
-    glCullFace(GL_BACK);
+    // glEnable(GL_CULL_FACE);
+    // glFrontFace(GL_CCW);
+    // glCullFace(GL_BACK);
 
 }
 
@@ -77,6 +78,15 @@ World::~World() {
 }
 
 void World::update() {
+
+    auto size = window.get_size();
+
+
+    transform.position.x = size.fb_w/2;
+    transform.position.y = size.fb_h/2;
+    transform.scale.x = 200.0f;
+    transform.scale.y = 200.0f;
+
     /* MODEL */
     model = glm::mat4(1.0f);
 
@@ -102,9 +112,29 @@ void World::update() {
     view = glm::rotate(view,glm::radians(viewTransform.rotation.z),glm::vec3(0.0f,0.0f,1.0f));
 
     view = glm::inverse(view);
-
-
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+
+    /* PROJECTION */
+    projection = glm::ortho(0.0f,(float)size.fb_w,0.0f,(float)size.fb_h);
+    glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
+
+    /* INPUT HANDLES */
+    auto native_window = window.get();
+    // view move
+    if (glfwGetKey(native_window, GLFW_KEY_A) == GLFW_PRESS) {
+       viewTransform.position.x -= 5.0f;
+    }
+    if (glfwGetKey(native_window, GLFW_KEY_D) == GLFW_PRESS) {
+        viewTransform.position.x += 5.0f;
+    }
+    if (glfwGetKey(native_window, GLFW_KEY_W) == GLFW_PRESS) {
+        viewTransform.position.y += 5.0f;
+    }
+    if (glfwGetKey(native_window, GLFW_KEY_S) == GLFW_PRESS) {
+        viewTransform.position.y -= 5.0f;
+    }
+
 }
 
 void World::render() {
@@ -114,7 +144,7 @@ void World::render() {
     glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT,0);
 
     ImGui::Begin("Camera");
-    ImGui::DragFloat3("position", glm::value_ptr(viewTransform.position), 0.01f);
+    ImGui::DragFloat3("position", glm::value_ptr(viewTransform.position), 5.00f);
     ImGui::DragFloat3("rotation", glm::value_ptr(viewTransform.rotation), 1.0f);
     ImGui::End();
 }

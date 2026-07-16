@@ -32,6 +32,9 @@ public:
     void update() const ;
 
     Size get_size() const;
+    GLFWwindow* get() const {
+        return window;
+    }
 
 
 };
