@@ -25,8 +25,7 @@ class Camera {
 private:
     glm::mat4 viewMatrix_;
     glm::mat4 projectionMatrix_;
-    glm::vec3 viewForward_{0.0f, 0.0f, -1.0f};
-    glm::vec3 viewRight_{1.0f, 0.0f, 0.0f};
+
 public:
     Transform transform {
         .position = {0.0f,0.0f,1.0f},
@@ -43,10 +42,13 @@ public:
     glm::mat4 getViewMatrix() const;
     glm::mat4 getProjectionMatrix(const WindowSize& size);
 
+    glm::quat getOrientation() const {
+        return glm::quat(glm::radians(transform.rotation));
+    }
     glm::vec3 getForward() const {
-        return viewForward_;
+        return getOrientation() * glm::vec3(0.0f, 0.0f, -1.0f);
     }
     glm::vec3 getRight() const {
-        return viewRight_;
+        return getOrientation() * glm::vec3(1.0f, 0.0f, 0.0f);
     }
 };
