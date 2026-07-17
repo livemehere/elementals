@@ -144,18 +144,18 @@ void World::update() {
         viewTransform.position.x +=moveStep;
     }
     if (glfwGetKey(native_window, GLFW_KEY_W) == GLFW_PRESS) {
-        viewTransform.position.y +=moveStep;
+        viewTransform.position.z -=moveStep;
     }
     if (glfwGetKey(native_window, GLFW_KEY_S) == GLFW_PRESS) {
-        viewTransform.position.y -=moveStep;
+        viewTransform.position.z +=moveStep;
     }
 
     if (glfwGetKey(native_window, GLFW_KEY_E) == GLFW_PRESS) {
-        viewTransform.position.z -=moveStep;
+        viewTransform.position.y +=moveStep;
     }
 
     if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
-        viewTransform.position.z +=moveStep;
+        viewTransform.position.y -=moveStep;
     }
 }
 
