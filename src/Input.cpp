@@ -6,7 +6,7 @@ Input::Input(Window &window) : window_(window) {}
 
 void Input::update() {
     GLFWwindow* nativeWindow = window_.get();
-    const Size size = window_.get_size();
+    const WindowSize size = window_.get_size();
 
     /* MOUSE POSITION */
     double x,y;

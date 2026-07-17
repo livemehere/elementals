@@ -20,6 +20,8 @@ add_executable(Elementals src/main.cpp
         src/Input.cpp
         src/Input.h
         src/common.h
+        src/core/Camera.cpp
+        src/core/Camera.h
 )
 
 target_link_libraries(Elementals PRIVATE

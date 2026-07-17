@@ -24,13 +24,6 @@ struct Vertex {
     TexCoord texCoord;
 };
 
-
-struct Transform {
-    glm::vec3 position;
-    glm::vec3 rotation;
-    glm::vec3 scale;
-};
-
 class World {
 private:
    Window& window;
@@ -67,14 +60,6 @@ private:
 
     // view
     GLuint viewLocation;
-    glm::mat4 view;
-    Transform viewTransform {
-        .position = {0.0f,0.0f,0.0f},
-        .rotation = {0.0f,0.0f,0.0f},
-        .scale = {1.0f,1.0f,1.0f},
-    };
-    glm::vec3 viewForward{0.0f, 0.0f, -1.0f};
-    glm::vec3 viewRight{1.0f, 0.0f, 0.0f};
 
     // projection
     GLuint projectionLocation;
@@ -90,6 +75,6 @@ public:
     World(Window& window, Input& input);
     ~World();
 
-    void update();
+    void update(const glm::mat4& view, const glm::mat4& projection);
     void render();
 };

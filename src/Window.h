@@ -5,7 +5,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-struct Size {
+struct WindowSize {
     int w;
     int h;
     int fb_w;
@@ -31,7 +31,7 @@ public:
     void before_update();
     void update() const ;
 
-    Size get_size() const;
+    WindowSize get_size() const;
     GLFWwindow* get() const {
         return window;
     }

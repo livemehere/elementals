@@ -103,7 +103,7 @@ void Window::update() const {
     glfwSwapBuffers(window);
 }
 
-Size Window::get_size() const {
+WindowSize Window::get_size() const {
     return {
         w,
         h,
