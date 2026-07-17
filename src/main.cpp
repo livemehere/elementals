@@ -20,7 +20,8 @@ int main() {
 
         Input input{win};
         Camera camera;
-        FreeLookCameraController controller;
+        // camera.projection = OrthoGraphicProjection{};
+        FreeLookCameraController cameraController;
         World world;
 
         float lastFrameTime = static_cast<float>(glfwGetTime());
@@ -38,7 +39,7 @@ int main() {
 
             /* update */
             input.update();
-            controller.update(camera, input, dt);
+            cameraController.update(camera, input, dt);
             camera.update();
             world.update(camera.getViewMatrix(), camera.getProjectionMatrix(size));
 
