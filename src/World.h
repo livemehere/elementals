@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "opengl/ShaderProgram.h"
+#include "opengl/Texture2D.h"
 
 struct Position {
     float x;
@@ -23,6 +24,13 @@ struct Vertex {
     TexCoord texCoord;
 };
 
+constexpr std::array<uint8_t,16> pixels = {
+    255,0,0,80,
+    0,255,0,80,
+    0,0,255,80,
+    80,80,80,80,
+};
+
 class World {
 private:
    std::vector<Vertex> vertices = {
@@ -35,15 +43,6 @@ private:
        0, 1, 2,
        1, 3, 2
    };
-
-    int textureW = 2;
-    int textureH = 2;
-    std::vector<uint8_t> pixel = {
-        255,0,0,80,
-        0,255,0,80,
-        0,0,255,80,
-        80,80,80,80,
-    };
 
     // model
     GLuint modelLocation;
@@ -65,7 +64,7 @@ private:
     GLuint VBO;
     GLuint EBO;
     ShaderProgram shader{"shaders/basic.vert", "shaders/basic.frag"};
-    GLuint texture;
+    Texture2D texture{2,2,pixels };
 
 public:
     World();

@@ -40,24 +40,6 @@ World::World()  {
     projectionLocation = glGetUniformLocation(shader.getId(), "uProjection");
 
 
-    // texture
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D,texture);
-    glTexImage2D(
-        GL_TEXTURE_2D,
-        0,
-        GL_RGBA8,
-        textureW,
-        textureH,
-        0,
-        GL_RGBA,
-        GL_UNSIGNED_BYTE,
-        pixel.data()
-    );
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // render as wireframe
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -70,7 +52,6 @@ World::World()  {
 }
 
 World::~World() {
-    glDeleteTextures(1, &texture);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     glDeleteVertexArrays(1, &VAO);
@@ -104,8 +85,8 @@ void World::update(const glm::mat4& view, const glm::mat4& projection) {
 }
 
 void World::render() {
+    texture.bind();
     shader.use();
-    glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT,0);
 

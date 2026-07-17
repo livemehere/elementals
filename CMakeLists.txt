@@ -28,6 +28,8 @@ add_executable(Elementals src/main.cpp
         src/opengl/Shader.h
         src/opengl/ShaderProgram.cpp
         src/opengl/ShaderProgram.h
+        src/opengl/Texture2D.cpp
+        src/opengl/Texture2D.h
 )
 
 target_link_libraries(Elementals PRIVATE
