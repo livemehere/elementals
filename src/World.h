@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include "opengl/ShaderProgram.h"
+
 struct Position {
     float x;
     float y;
@@ -62,7 +64,7 @@ private:
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
-    GLuint program;
+    ShaderProgram shader{"shaders/basic.vert", "shaders/basic.frag"};
     GLuint texture;
 
 public:

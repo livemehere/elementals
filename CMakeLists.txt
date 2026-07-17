@@ -26,6 +26,8 @@ add_executable(Elementals src/main.cpp
         src/camera/FreeLookCameraController.h
         src/opengl/Shader.cpp
         src/opengl/Shader.h
+        src/opengl/ShaderProgram.cpp
+        src/opengl/ShaderProgram.h
 )
 
 target_link_libraries(Elementals PRIVATE

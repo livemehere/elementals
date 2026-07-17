@@ -2,15 +2,14 @@
 #include "World.h"
 
 #include <imgui.h>
-#include <iostream>
 #include <vector>
-
-#include <GLFW/glfw3.h>
 
 #include "utils.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "opengl/ShaderProgram.h"
 
 World::World()  {
     // VAO
@@ -35,11 +34,10 @@ World::World()  {
     glEnableVertexAttribArray(1);
 
     // shader
-    program = utils::create_shader_program("shaders/basic.vert", "shaders/basic.frag");
-    glUseProgram(program);
-    modelLocation = glGetUniformLocation(program, "uModel");
-    viewLocation = glGetUniformLocation(program, "uView");
-    projectionLocation = glGetUniformLocation(program, "uProjection");
+    shader.use();
+    modelLocation = glGetUniformLocation(shader.getId(), "uModel");
+    viewLocation = glGetUniformLocation(shader.getId(), "uView");
+    projectionLocation = glGetUniformLocation(shader.getId(), "uProjection");
 
 
     // texture
@@ -72,7 +70,6 @@ World::World()  {
 }
 
 World::~World() {
-    glDeleteProgram(program);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     glDeleteVertexArrays(1, &VAO);
@@ -100,15 +97,13 @@ void World::update(const glm::mat4& view, const glm::mat4& projection) {
     model = glm::scale(model, transform.scale);
 
     glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-
-
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 }
 
 void World::render() {
-    glUseProgram(program);
+    shader.use();
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT,0);
