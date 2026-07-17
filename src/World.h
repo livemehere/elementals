@@ -60,9 +60,7 @@ private:
     GLuint projectionLocation;
     glm::mat4 projection;
 
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
+
     ShaderProgram shader{"shaders/basic.vert", "shaders/basic.frag"};
     Texture2D texture{2,2,pixels };
 

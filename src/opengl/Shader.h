@@ -4,7 +4,6 @@
 #include <glad/glad.h>
 
 class Shader {
-private:
     GLuint id_ = 0;
 public:
     Shader(GLenum type, const std::string &filepath);
