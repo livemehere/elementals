@@ -30,8 +30,8 @@ void FreeLookCameraController::update(Camera &camera, Input &input, float dt) {
 
     float applySpeed = input.isKeyDown(Key::LeftShift) ? sprintSpeed : speed;
 
-    camera.transform.position += camera.viewForward * moveInput.y * applySpeed * dt;
-    camera.transform.position += camera.viewRight * moveInput.x * applySpeed * dt;
+    camera.transform.position += camera.getForward() * moveInput.y * applySpeed * dt;
+    camera.transform.position += camera.getRight() * moveInput.x * applySpeed * dt;
 
     // up, down
     if (input.isKeyDown(Key::E)) {

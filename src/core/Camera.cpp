@@ -18,8 +18,8 @@ void Camera::update() {
     viewMatrix_ = glm::inverse(viewMatrix_);
 
     // update direction
-    viewForward = viewQuaternion * glm::vec3(0.0f, 0.0f, -1.0f);
-    viewRight = viewQuaternion * glm::vec3(1.0f, 0.0f, 0.0f);
+    viewForward_ = viewQuaternion * glm::vec3(0.0f, 0.0f, -1.0f);
+    viewRight_ = viewQuaternion * glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
 
@@ -28,9 +28,11 @@ glm::mat4 Camera::getViewMatrix() const {
 }
 
 glm::mat4 Camera::getProjectionMatrix(const WindowSize &size) {
+    // if (size.w == 0 || size.h == 0) return projectionMatrix_;
+
     if (std::holds_alternative<PerspectiveProjection>(projection)) {
         const auto& perspective = std::get<PerspectiveProjection>(projection);
-        projectionMatrix_ = glm::perspective(glm::radians(perspective.fov),static_cast<float>(size.fb_w)/ static_cast<float>(size.fb_h), perspective.near, perspective.far);
+        projectionMatrix_ = glm::perspective(glm::radians(perspective.fov),static_cast<float>(size.w)/ static_cast<float>(size.h), perspective.near, perspective.far);
     } else {
         const auto& orthographic = std::get<OrthoGraphicProjection>(projection);
         const float ratio = static_cast<float>(size.w) / static_cast<float>(size.h);

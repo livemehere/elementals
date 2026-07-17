@@ -21,23 +21,25 @@ int main() {
         Input input{win};
         Camera camera;
         FreeLookCameraController controller;
-        World world{win, input};
+        World world;
 
+        float lastFrameTime = static_cast<float>(glfwGetTime());
         while (!win.should_close()) {
-            static float lastFrameTime = 0;
-            float currentFrameTime = (float)glfwGetTime();
+            win.before_update();
+
+            float currentFrameTime = static_cast<float>(glfwGetTime());
             float dt = (currentFrameTime - lastFrameTime);
+            // dt = std::min(dt, 0.1f); // prevent spark when replay after paused(debugging..)
             lastFrameTime = currentFrameTime;
 
             const WindowSize& size = win.get_size();
             const MouseState& mouseState = input.getMouseState();
 
-            win.before_update();
 
             /* update */
             input.update();
-            camera.update();
             controller.update(camera, input, dt);
+            camera.update();
             world.update(camera.getViewMatrix(), camera.getProjectionMatrix(size));
 
             /* render */

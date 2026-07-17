@@ -26,9 +26,6 @@ struct Vertex {
 
 class World {
 private:
-   Window& window;
-   Input& input;
-
    std::vector<Vertex> vertices = {
        {{ -0.5f, -0.5f, 0.0f}, {0.0f,0.0f}}, // left bottom
        {{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}}, // right bottom
@@ -72,7 +69,7 @@ private:
     GLuint texture;
 
 public:
-    World(Window& window, Input& input);
+    World();
     ~World();
 
     void update(const glm::mat4& view, const glm::mat4& projection);

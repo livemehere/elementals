@@ -12,7 +12,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-World::World(Window& window, Input& input) : window(window), input(input) {
+World::World()  {
     // VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -81,13 +81,6 @@ World::~World() {
 
 void World::update(const glm::mat4& view, const glm::mat4& projection) {
 
-    auto size = window.get_size();
-
-
-    // for 2D
-    // transform.scale.x = 200.0f;
-    // transform.scale.y = 200.0f;
-
     // for 3D
     transform.position.z = -1.0f;
 
@@ -111,23 +104,6 @@ void World::update(const glm::mat4& view, const glm::mat4& projection) {
 
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
-
-
-    /* INPUT HANDLES */
-    auto native_window = window.get();
-
-
-
-
-
-    /* UP, DOWN */
-
-
-
-    //
-    //
-    // viewTransform.position += viewForward * inputVector.y * moveSpeed * deltaTime;
-    // viewTransform.position += viewRight * inputVector.x * moveSpeed * deltaTime;
 
 }
 
