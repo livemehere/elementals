@@ -18,6 +18,7 @@ int main() {
 
         while (!win.should_close()) {
             const Size size = win.get_size();
+            const MouseState mouseState = input.getMouseState();
 
             win.before_update();
 
@@ -29,7 +30,17 @@ int main() {
             ImGui::Begin("Debug");
             ImGui::Text("size : %dx%d", size.w, size.h);
             ImGui::Text("buffer size : %dx%d", size.fb_w, size.fb_h);
-            ImGui::Text("cursor pos : %.2fx%.2f", input.xPos, input.yPos);
+            ImGui::Text("cursor pos : %.2fx%.2f", mouseState.x,mouseState.y);
+            ImGui::Text("cursor prevPos : %.2fx%.2f", mouseState.prevX,mouseState.prevY);
+            ImGui::Text("cursor delta : %.2fx%.2f", mouseState.deltaX,mouseState.deltaY);
+
+            auto leftStateStr = std::format("Left : {}", mouseState.leftBtnPressed ? "Pressed" : "NONE");
+            ImGui::Text(leftStateStr.c_str());
+
+            auto rightStateStr = std::format("Right : {}", mouseState.rightBtnPressed ? "Pressed" : "NONE");
+            ImGui::Text(rightStateStr.c_str());
+
+
             ImGui::End();
 
             win.update();
