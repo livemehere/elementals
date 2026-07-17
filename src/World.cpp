@@ -83,10 +83,10 @@ void World::update() {
 
 
     // for 2D
-    transform.position.x = size.fb_w/2;
-    transform.position.y = size.fb_h/2;
-    transform.scale.x = 200.0f;
-    transform.scale.y = 200.0f;
+    // transform.position.x = size.fb_w/2;
+    // transform.position.y = size.fb_h/2;
+    // transform.scale.x = 200.0f;
+    // transform.scale.y = 200.0f;
 
     // for 3D
     transform.position.z = -1.0f;
@@ -98,6 +98,7 @@ void World::update() {
     model = glm::translate(model, transform.position);
 
     // rotation
+
     model = glm::rotate(model,glm::radians(transform.rotation.x),glm::vec3(1.0f,0.0f,0.0f));
     model = glm::rotate(model,glm::radians(transform.rotation.y),glm::vec3(0.0f,1.0f,0.0f));
     model = glm::rotate(model,glm::radians(transform.rotation.z),glm::vec3(0.0f,0.0f,1.0f));
@@ -111,16 +112,23 @@ void World::update() {
     view = glm::mat4(1.0f);
     view = glm::translate(view, viewTransform.position);
 
-    view = glm::rotate(view,glm::radians(viewTransform.rotation.x),glm::vec3(1.0f,0.0f,0.0f));
-    view = glm::rotate(view,glm::radians(viewTransform.rotation.y),glm::vec3(0.0f,1.0f,0.0f));
-    view = glm::rotate(view,glm::radians(viewTransform.rotation.z),glm::vec3(0.0f,0.0f,1.0f));
+    /* Euler */
+    // view = glm::rotate(view,glm::radians(viewTransform.rotation.x),glm::vec3(1.0f,0.0f,0.0f));
+    // view = glm::rotate(view,glm::radians(viewTransform.rotation.y),glm::vec3(0.0f,1.0f,0.0f));
+    // view = glm::rotate(view,glm::radians(viewTransform.rotation.z),glm::vec3(0.0f,0.0f,1.0f));
+
+    /* Quaternion */
+    glm::vec3 eulerAngles(viewTransform.rotation);
+    glm::quat viewQuat = glm::quat(glm::radians(eulerAngles));
+    glm::mat4 viewQuatMat = glm::mat4_cast(viewQuat);
+    view = view * viewQuatMat;
 
     view = glm::inverse(view);
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
     /* PROJECTION */
-   projection = glm::ortho(0.0f,(float)size.fb_w,0.0f,(float)size.fb_h);
-    // projection = glm::perspective(glm::radians(45.0f),(float)(size.w/ size.h), 0.1f, 1000.0f);
+   // projection = glm::ortho(0.0f,(float)size.fb_w,0.0f,(float)size.fb_h);
+    projection = glm::perspective(glm::radians(45.0f),(float)size.fb_w/ (float)size.fb_h, 0.1f, 1000.0f);
 
     glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
@@ -158,7 +166,7 @@ void World::render() {
     glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT,0);
 
     ImGui::Begin("Camera");
-    ImGui::DragFloat3("position", glm::value_ptr(viewTransform.position), 5.00f);
+    ImGui::DragFloat3("position", glm::value_ptr(viewTransform.position), 1.0f);
     ImGui::DragFloat3("rotation", glm::value_ptr(viewTransform.rotation), 1.0f);
     ImGui::End();
 }
