@@ -9,12 +9,12 @@ struct Vertex {
 };
 
 class Mesh {
-    GLuint vao;
-    GLuint vbo;
-    GLuint ebo;
-    GLsizei indexCount;
+    GLuint vao = 0;
+    GLuint vbo = 0;
+    GLuint ebo = 0;
+    GLsizei indexCount = 0;
 public:
-    Mesh(std::span<const Vertex> vertices, std::span<const int> indices);
+    Mesh(std::span<const Vertex> vertices, std::span<const GLuint> indices);
     ~Mesh();
 
     Mesh(const Mesh&) = delete;

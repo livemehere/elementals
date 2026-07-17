@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::span<const Vertex> vertices, std::span<const int> indices) : indexCount(static_cast<GLsizei>(indices.size())){
+Mesh::Mesh(std::span<const Vertex> vertices, std::span<const GLuint> indices) : indexCount(static_cast<GLsizei>(indices.size())){
     // VAO
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
