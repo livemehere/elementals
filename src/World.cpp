@@ -1,10 +1,10 @@
 #include "common.h"
 #include "World.h"
-
+#include "./renderer/Transform.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "opengl/Shader.h"
+#include "graphics/Shader.h"
 
 World::World()  {
     // shader

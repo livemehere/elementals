@@ -1,6 +1,6 @@
 #pragma once
 #include "Camera.h"
-#include "../Input.h"
+#include "../core/Input.h"
 
 class FreeLookCameraController {
 public:

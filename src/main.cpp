@@ -4,8 +4,8 @@
 #include <imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Input.h"
-#include "Window.h"
+#include "core/Input.h"
+#include "core/Window.h"
 #include "World.h"
 #include "camera/Camera.h"
 #include "camera/FreeLookCameraController.h"

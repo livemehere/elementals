@@ -3,7 +3,7 @@
 #include <format>
 #include <stdexcept>
 
-#include "../utils.h"
+#include "../core/utils.h"
 
 ShaderStage::ShaderStage(GLenum type, const std::string &filepath) {
     const std::string sourcePath = utils::asset_path(filepath);

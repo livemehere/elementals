@@ -5,7 +5,8 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "../common.h"
-#include "../Window.h"
+#include "../core/Window.h"
+#include "../renderer/Transform.h"
 
 struct OrthoGraphicProjection {
     float height = 5.0f;
