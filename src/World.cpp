@@ -70,6 +70,7 @@ World::World()  {
 }
 
 World::~World() {
+    glDeleteTextures(1, &texture);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     glDeleteVertexArrays(1, &VAO);

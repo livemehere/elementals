@@ -1,13 +1,13 @@
 #include "ShaderProgram.h"
 
 #include <format>
+#include <stdexcept>
 
 #include "Shader.h"
-#include "../utils.h"
 
 ShaderProgram::ShaderProgram(const std::string &vsPath, const std::string &fsPath) {
-    const Shader vs = Shader(GL_VERTEX_SHADER,vsPath);
-    const Shader fs = Shader(GL_FRAGMENT_SHADER,fsPath);
+    const Shader vs(GL_VERTEX_SHADER,vsPath);
+    const Shader fs(GL_FRAGMENT_SHADER,fsPath);
 
     id_ = glCreateProgram();
     glAttachShader(id_, vs.getId());
@@ -18,10 +18,6 @@ ShaderProgram::ShaderProgram(const std::string &vsPath, const std::string &fsPat
     glGetProgramiv(id_, GL_LINK_STATUS, &success);
 
     if (success == GL_FALSE) {
-
-        glDetachShader(id_, vs.getId());
-        glDetachShader(id_, fs.getId());
-
         GLint logLength = 0;
         glGetProgramiv(id_, GL_INFO_LOG_LENGTH, &logLength);
         std::string log(logLength,'\0');
@@ -33,6 +29,9 @@ ShaderProgram::ShaderProgram(const std::string &vsPath, const std::string &fsPat
 
         throw std::runtime_error(std::format("[SHADER_PROGRAM] {}", log));
     }
+
+    glDetachShader(id_, vs.getId());
+    glDetachShader(id_, fs.getId());
 
 }
 

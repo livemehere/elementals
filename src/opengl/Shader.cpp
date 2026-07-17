@@ -1,6 +1,7 @@
 #include "Shader.h"
 
 #include <format>
+#include <stdexcept>
 
 #include "../utils.h"
 
