@@ -11,19 +11,19 @@ void Input::update() {
     /* MOUSE POSITION */
     double x,y;
     glfwGetCursorPos(nativeWindow, &x, &y);
-    mouseState_.x = (float)x * size.fb_w / size.w;
-    mouseState_.y = (float)y * size.fb_h / size.h;
+    mouseState_.screenX = (float)x * size.fb_w / size.w;
+    mouseState_.screenY = (float)y * size.fb_h / size.h;
     if (firstMouseUpdate_) {
         mouseState_.deltaX = 0.0f;
         mouseState_.deltaY = 0.0f;
-        mouseState_.prevX = mouseState_.x;
-        mouseState_.prevY = mouseState_.y;
+        mouseState_.prevScreenX = mouseState_.screenX;
+        mouseState_.prevScreenY = mouseState_.screenY;
         firstMouseUpdate_ = false;
     } else {
-        mouseState_.deltaX = mouseState_.x - mouseState_.prevX;
-        mouseState_.deltaY = mouseState_.y - mouseState_.prevY;
-        mouseState_.prevX = mouseState_.x;
-        mouseState_.prevY = mouseState_.y;
+        mouseState_.deltaX = mouseState_.screenX - mouseState_.prevScreenX;
+        mouseState_.deltaY = mouseState_.screenY - mouseState_.prevScreenY;
+        mouseState_.prevScreenX = mouseState_.screenX;
+        mouseState_.prevScreenY = mouseState_.screenY;
     }
 
     /* MOUSE BUTTONS */

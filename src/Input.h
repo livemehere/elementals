@@ -3,10 +3,10 @@
 
 
 struct MouseState {
-    float x;
-    float y;
-    float prevX;
-    float prevY;
+    float screenX;
+    float screenY;
+    float prevScreenX;
+    float prevScreenY;
     float deltaX;
     float deltaY;
     bool leftBtnDown;

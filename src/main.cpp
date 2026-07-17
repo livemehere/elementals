@@ -30,8 +30,7 @@ int main() {
             ImGui::Begin("Debug");
             ImGui::Text("size : %dx%d", size.w, size.h);
             ImGui::Text("buffer size : %dx%d", size.fb_w, size.fb_h);
-            ImGui::Text("cursor pos : %.2fx%.2f", mouseState.x,mouseState.y);
-            ImGui::Text("cursor prevPos : %.2fx%.2f", mouseState.prevX,mouseState.prevY);
+            ImGui::Text("screen pos : %.2fx%.2f", mouseState.screenX,mouseState.screenY);
             ImGui::Text("cursor delta : %.2fx%.2f", mouseState.deltaX,mouseState.deltaY);
 
             auto leftStateStr = std::format("Left : {}", mouseState.leftBtnDown ? "Pressed" : "NONE");
