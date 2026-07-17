@@ -116,51 +116,15 @@ void World::update(const glm::mat4& view, const glm::mat4& projection) {
     /* INPUT HANDLES */
     auto native_window = window.get();
 
-    static float lastFrameTime = 0;
-    float currentFrameTime = (float)glfwGetTime();
-    float deltaTime = (currentFrameTime - lastFrameTime);
-    lastFrameTime = currentFrameTime;
 
 
-    // view rotation
-    static float hSensitivity = 0.05f;
-    static float vSensitivity = 0.05f;
-    auto& mouseState = input.getMouseState();
-    // viewTransform.rotation.y -= mouseState.deltaX * hSensitivity;
-    // viewTransform.rotation.x -= mouseState.deltaY * vSensitivity;
 
-
-    // view movement
-    static float moveSpeed = 2.0f;
-    glm::vec3 inputVector(0.0f, 0.0f, 0.0f);
-    if (glfwGetKey(native_window, GLFW_KEY_A) == GLFW_PRESS) {
-       inputVector.x -= 1.0f;
-    }
-    if (glfwGetKey(native_window, GLFW_KEY_D) == GLFW_PRESS) {
-        inputVector.x +=1.0f;
-    }
-    if (glfwGetKey(native_window, GLFW_KEY_W) == GLFW_PRESS) {
-        inputVector.y +=1.0f;
-    }
-    if (glfwGetKey(native_window, GLFW_KEY_S) == GLFW_PRESS) {
-        inputVector.y -=1.0f;
-    }
 
     /* UP, DOWN */
-    // if (glfwGetKey(native_window, GLFW_KEY_E) == GLFW_PRESS) {
-    //     viewTransform.position += glm::vec3(0.0f, 1.0f,0.0f) * moveSpeed * deltaTime;
-    // }
-    //
-    // if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
-    //     viewTransform.position += glm::vec3(0.0f, -1.0f,0.0f) * moveSpeed * deltaTime;
-    // }
 
-    if (glm::dot(inputVector, inputVector) > 0.0f) {
-        inputVector = glm::normalize(inputVector);
-    }
+
+
     //
-    // viewForward = viewQuat * glm::vec3(0.0f, 0.0f, -1.0f);
-    // viewRight = viewQuat * glm::vec3(1.0f, 0.0f, 0.0f);
     //
     // viewTransform.position += viewForward * inputVector.y * moveSpeed * deltaTime;
     // viewTransform.position += viewRight * inputVector.x * moveSpeed * deltaTime;

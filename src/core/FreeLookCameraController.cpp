@@ -1,0 +1,49 @@
+#include "FreeLookCameraController.h"
+
+void FreeLookCameraController::update(Camera &camera, Input &input, float dt) {
+    auto& mouseState = input.getMouseState();
+    // cursor lock control
+    if (mouseState.leftBtnPressed) {
+        input.setCursorLockState(true);
+    } else if (input.isKeyDown(Key::ESC)) {
+        input.setCursorLockState(false);
+    }
+
+    if (!mouseState.lock) return;
+
+    glm::vec2 moveInput{0.0f};
+    if (input.isKeyDown(Key::A)) {
+        moveInput.x -= 1.0f;
+    }
+    if (input.isKeyDown(Key::D)) {
+        moveInput.x += 1.0f;
+    }
+    if (input.isKeyDown(Key::W)) {
+        moveInput.y += 1.0f;
+    }
+    if (input.isKeyDown(Key::S)) {
+        moveInput.y -= 1.0f;
+    }
+    if (glm::dot(moveInput, moveInput) > 0.0f) {
+        moveInput = glm::normalize(moveInput);
+    }
+
+    camera.transform.position += camera.viewForward * moveInput.y * dt;
+    camera.transform.position += camera.viewRight * moveInput.x * dt;
+
+    // up, down
+    if (input.isKeyDown(Key::E)) {
+        camera.transform.position += glm::vec3(0.0f, 1.0f,0.0f) * speed * dt;
+    }
+
+    if (input.isKeyDown(Key::Q)) {
+        camera.transform.position += glm::vec3(0.0f, -1.0f,0.0f) * speed * dt;
+    }
+
+
+    // view rotation
+    camera.transform.rotation.y -= mouseState.deltaX * hSensitivity;
+    camera.transform.rotation.x -= mouseState.deltaY * vSensitivity;
+
+
+}

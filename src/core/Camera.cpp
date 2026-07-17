@@ -10,13 +10,18 @@ void Camera::update() {
     viewMatrix_ = glm::translate(viewMatrix_, transform.position);
 
     // R
-    glm::quat quaternion = glm::quat(glm::radians(transform.rotation));
-    glm::mat4 quaternionMatrix = glm::mat4_cast(quaternion);
+    glm::quat viewQuaternion = glm::quat(glm::radians(transform.rotation));
+    glm::mat4 quaternionMatrix = glm::mat4_cast(viewQuaternion);
     viewMatrix_ *= quaternionMatrix;
 
     // inverse
     viewMatrix_ = glm::inverse(viewMatrix_);
+
+    // update direction
+    viewForward = viewQuaternion * glm::vec3(0.0f, 0.0f, -1.0f);
+    viewRight = viewQuaternion * glm::vec3(1.0f, 0.0f, 0.0f);
 }
+
 
 glm::mat4 Camera::getViewMatrix() const {
     return viewMatrix_;

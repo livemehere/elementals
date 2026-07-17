@@ -2,6 +2,21 @@
 
 #include <GLFW/glfw3.h>
 
+namespace {
+    int toGlKey(const Key key) {
+        switch (key) {
+            case Key::ESC: return GLFW_KEY_ESCAPE;
+            case Key::W: return GLFW_KEY_W;
+            case Key::A: return GLFW_KEY_A;
+            case Key::S: return GLFW_KEY_S;
+            case Key::D: return GLFW_KEY_D;
+            case Key::Q: return GLFW_KEY_Q;
+            case Key::E: return GLFW_KEY_E;
+        }
+        return GLFW_KEY_UNKNOWN;
+    }
+}
+
 Input::Input(Window &window) : window_(window) {}
 
 void Input::update() {
@@ -44,4 +59,8 @@ void Input::setCursorLockState(bool lock) {
     glfwSetInputMode(window_.get(), GLFW_CURSOR, lock ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 
     firstMouseUpdate_ = true;
+}
+
+bool Input::isKeyDown(Key key) const {
+    return glfwGetKey(window_.get(),toGlKey(key)) == GLFW_PRESS;
 }

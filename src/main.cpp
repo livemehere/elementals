@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "World.h"
 #include "core/Camera.h"
+#include "core/FreeLookCameraController.h"
 
 
 int main() {
@@ -19,23 +20,32 @@ int main() {
 
         Input input{win};
         Camera camera;
-        camera.projection = PerspectiveProjection{};
-        // camera.projection = OrthoGraphicProjection{};
+        FreeLookCameraController controller;
         World world{win, input};
 
         while (!win.should_close()) {
+            static float lastFrameTime = 0;
+            float currentFrameTime = (float)glfwGetTime();
+            float dt = (currentFrameTime - lastFrameTime);
+            lastFrameTime = currentFrameTime;
+
             const WindowSize& size = win.get_size();
             const MouseState& mouseState = input.getMouseState();
 
             win.before_update();
 
-            camera.update();
+            /* update */
             input.update();
+            camera.update();
+            controller.update(camera, input, dt);
             world.update(camera.getViewMatrix(), camera.getProjectionMatrix(size));
+
+            /* render */
             world.render();
 
             ImGui::SetNextWindowSize(ImVec2(250,150), ImGuiCond_Once);
             ImGui::Begin("Debug");
+            ImGui::Text("FPS %.1f FPS", ImGui::GetIO().Framerate);
             ImGui::Text("size : %dx%d", size.w, size.h);
             ImGui::Text("buffer size : %dx%d", size.fb_w, size.fb_h);
             ImGui::Text("screen pos : %.2fx%.2f", mouseState.screenX,mouseState.screenY);
@@ -52,9 +62,19 @@ int main() {
             ImGui::Begin("Camera");
             ImGui::DragFloat3("position", glm::value_ptr(camera.transform.position), 1.0f);
             ImGui::DragFloat3("rotation", glm::value_ptr(camera.transform.rotation), 1.0f);
+
+            static bool is3DMode = true;
+            if (ImGui::Selectable(is3DMode ? "3D" : "2D", is3DMode)) {
+                is3DMode = !is3DMode;
+                if (is3DMode) {
+                    camera.projection = PerspectiveProjection{};
+                }else {
+                    camera.projection = OrthoGraphicProjection{};
+                }
+            }
+
             ImGui::End();
 
-            input.setCursorLockState(mouseState.leftBtnDown);
 
             win.update();
         }

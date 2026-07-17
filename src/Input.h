@@ -1,6 +1,15 @@
 #pragma once
 #include "Window.h"
 
+enum class Key {
+    ESC,
+    W,
+    A,
+    S,
+    D,
+    Q,
+    E,
+};
 
 struct MouseState {
     float screenX;
@@ -31,4 +40,6 @@ public:
 
     void update();
     void setCursorLockState(bool lock);
+
+    bool isKeyDown(Key key) const;
 };
