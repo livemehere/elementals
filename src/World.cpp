@@ -11,7 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-World::World(Window& window) : window(window) {
+World::World(Window& window, Input& input) : window(window), input(input) {
     // VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -135,27 +135,32 @@ void World::update() {
 
     /* INPUT HANDLES */
     auto native_window = window.get();
-    constexpr float moveStep = 0.01f;
+
+    static float lastFrameTime = 0;
+    float currentFrameTime = (float)glfwGetTime();
+    float deltaTime = (currentFrameTime - lastFrameTime);
+    lastFrameTime = currentFrameTime;
+
+
+    constexpr float moveStep = 1.0f;
     // view move
     if (glfwGetKey(native_window, GLFW_KEY_A) == GLFW_PRESS) {
-       viewTransform.position.x -=moveStep;
+       viewTransform.position.x -=moveStep * deltaTime;
     }
     if (glfwGetKey(native_window, GLFW_KEY_D) == GLFW_PRESS) {
-        viewTransform.position.x +=moveStep;
+        viewTransform.position.x +=moveStep * deltaTime;
     }
     if (glfwGetKey(native_window, GLFW_KEY_W) == GLFW_PRESS) {
-        viewTransform.position.z -=moveStep;
+        viewTransform.position.z -=moveStep * deltaTime;
     }
     if (glfwGetKey(native_window, GLFW_KEY_S) == GLFW_PRESS) {
-        viewTransform.position.z +=moveStep;
+        viewTransform.position.z +=moveStep * deltaTime;
     }
-
     if (glfwGetKey(native_window, GLFW_KEY_E) == GLFW_PRESS) {
-        viewTransform.position.y +=moveStep;
+        viewTransform.position.y +=moveStep * deltaTime;
     }
-
     if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
-        viewTransform.position.y -=moveStep;
+        viewTransform.position.y -=moveStep * deltaTime;
     }
 }
 

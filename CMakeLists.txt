@@ -16,7 +16,10 @@ add_executable(Elementals src/main.cpp
         src/Window.h
         src/World.cpp
         src/World.h
-        src/utils.h)
+        src/utils.h
+        src/Input.cpp
+        src/Input.h
+)
 
 target_link_libraries(Elementals PRIVATE
         glfw

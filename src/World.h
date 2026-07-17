@@ -5,6 +5,7 @@
 
 #include <glm/glm.hpp>
 
+#include "Input.h"
 #include "Window.h"
 
 struct Position {
@@ -33,6 +34,7 @@ struct Transform {
 class World {
 private:
    Window& window;
+   Input& input;
 
    std::vector<Vertex> vertices = {
        {{ -0.5f, -0.5f, 0.0f}, {0.0f,0.0f}}, // left bottom
@@ -83,7 +85,7 @@ private:
     GLuint texture;
 
 public:
-    World(Window& window);
+    World(Window& window, Input& input);
     ~World();
 
     void update();
