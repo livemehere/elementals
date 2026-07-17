@@ -6,15 +6,19 @@
 class Shader {
     GLuint id_ = 0;
 public:
-    Shader(GLenum type, const std::string &filepath);
+    Shader(const std::string& vsPath, const std::string& fsPath);
     ~Shader() {
         if (id_ != 0) {
-            glDeleteShader(id_);
+            glDeleteProgram(id_);
         }
     }
 
     Shader(const Shader&) = delete;
     Shader& operator=(const Shader&) = delete;
+
+    void use() const {
+        glUseProgram(id_);
+    }
 
     GLuint getId() const { return id_; }
 };

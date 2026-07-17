@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "opengl/Mesh.h"
-#include "opengl/ShaderProgram.h"
+#include "opengl/Shader.h"
 #include "opengl/Texture2D.h"
 
 
@@ -51,7 +51,7 @@ private:
     glm::mat4 projection;
 
 
-    ShaderProgram shader{"shaders/basic.vert", "shaders/basic.frag"};
+    Shader shader{"shaders/basic.vert", "shaders/basic.frag"};
     Texture2D texture{2,2,pixels };
 
 public:
