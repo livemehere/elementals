@@ -24,15 +24,15 @@ add_executable(Elementals src/main.cpp
         src/camera/Camera.h
         src/camera/FreeLookCameraController.cpp
         src/camera/FreeLookCameraController.h
-        src/opengl/ShaderStage.cpp
-        src/opengl/ShaderStage.h
-        src/opengl/Shader.cpp
-        src/opengl/Shader.h
-        src/opengl/Texture2D.cpp
-        src/opengl/Texture2D.h
-        src/opengl/Mesh.cpp
-        src/opengl/Mesh.h
-        src/render/RenderObject.h
+        src/graphics/ShaderStage.cpp
+        src/graphics/ShaderStage.h
+        src/graphics/Shader.cpp
+        src/graphics/Shader.h
+        src/graphics/Texture2D.cpp
+        src/graphics/Texture2D.h
+        src/renderer/Mesh.cpp
+        src/renderer/Mesh.h
+        src/renderer/RenderObject.h
 )
 
 target_link_libraries(Elementals PRIVATE
