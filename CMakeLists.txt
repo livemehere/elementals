@@ -19,6 +19,7 @@ add_executable(Elementals src/main.cpp
         src/utils.h
         src/Input.cpp
         src/Input.h
+        src/common.h
 )
 
 target_link_libraries(Elementals PRIVATE

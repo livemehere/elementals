@@ -1,3 +1,4 @@
+#include "common.h"
 #include "World.h"
 
 #include <imgui.h>
@@ -123,6 +124,7 @@ void World::update() {
     glm::mat4 viewQuatMat = glm::mat4_cast(viewQuat);
     view = view * viewQuatMat;
 
+
     view = glm::inverse(view);
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
@@ -142,30 +144,48 @@ void World::update() {
     lastFrameTime = currentFrameTime;
 
 
-    constexpr float moveStep = 1.0f;
-    // view move
+    // view rotation
+    static float hSensitivity = 0.05f;
+    static float vSensitivity = 0.05f;
+    auto& mouseState = input.getMouseState();
+    viewTransform.rotation.y -= mouseState.deltaX * hSensitivity;
+    viewTransform.rotation.x -= mouseState.deltaY * vSensitivity;
+
+
+    // view movement
+    static float moveSpeed = 2.0f;
+    glm::vec3 inputVector(0.0f, 0.0f, 0.0f);
     if (glfwGetKey(native_window, GLFW_KEY_A) == GLFW_PRESS) {
-       viewTransform.position.x -=moveStep * deltaTime;
+       inputVector.x -= 1.0f;
     }
     if (glfwGetKey(native_window, GLFW_KEY_D) == GLFW_PRESS) {
-        viewTransform.position.x +=moveStep * deltaTime;
+        inputVector.x +=1.0f;
     }
     if (glfwGetKey(native_window, GLFW_KEY_W) == GLFW_PRESS) {
-        viewTransform.position.z -=moveStep * deltaTime;
+        inputVector.y +=1.0f;
     }
     if (glfwGetKey(native_window, GLFW_KEY_S) == GLFW_PRESS) {
-        viewTransform.position.z +=moveStep * deltaTime;
-    }
-    if (glfwGetKey(native_window, GLFW_KEY_E) == GLFW_PRESS) {
-        viewTransform.position.y +=moveStep * deltaTime;
-    }
-    if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
-        viewTransform.position.y -=moveStep * deltaTime;
+        inputVector.y -=1.0f;
     }
 
-    auto& mouseState = input.getMouseState();
-    viewTransform.rotation.y -= mouseState.deltaX * deltaTime;
-    viewTransform.rotation.x -= mouseState.deltaY * deltaTime;
+    /* UP, DOWN */
+    if (glfwGetKey(native_window, GLFW_KEY_E) == GLFW_PRESS) {
+        viewTransform.position += glm::vec3(0.0f, 1.0f,0.0f) * moveSpeed * deltaTime;
+    }
+
+    if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
+        viewTransform.position += glm::vec3(0.0f, -1.0f,0.0f) * moveSpeed * deltaTime;
+    }
+
+    if (glm::dot(inputVector, inputVector) > 0.0f) {
+        inputVector = glm::normalize(inputVector);
+    }
+
+    viewForward = viewQuat * glm::vec3(0.0f, 0.0f, -1.0f) ;
+    viewRight = viewQuat * glm::vec3(1.0f, 0.0f, 0.0f) ;
+
+    viewTransform.position += viewForward * inputVector.y * moveSpeed * deltaTime;
+    viewTransform.position += viewRight * inputVector.x * moveSpeed * deltaTime;
 
 }
 

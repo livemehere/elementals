@@ -73,6 +73,8 @@ private:
         .rotation = {0.0f,0.0f,0.0f},
         .scale = {1.0f,1.0f,1.0f},
     };
+    glm::vec3 viewForward{0.0f, 0.0f, -1.0f};
+    glm::vec3 viewRight{1.0f, 0.0f, 0.0f};
 
     // projection
     GLuint projectionLocation;
