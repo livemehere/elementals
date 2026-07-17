@@ -47,6 +47,7 @@ void FreeLookCameraController::update(Camera &camera, Input &input, float dt) {
     // view rotation
     camera.transform.rotation.y -= mouseState.deltaX * hSensitivity;
     camera.transform.rotation.x -= mouseState.deltaY * vSensitivity;
+    camera.transform.rotation.x = glm::clamp(camera.transform.rotation.x, -89.0f, 89.0f);
 
 
 }
