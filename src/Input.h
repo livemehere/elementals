@@ -13,6 +13,7 @@ struct MouseState {
     bool rightBtnDown;
     bool leftBtnPressed;
     bool rightBtnPressed;
+    bool lock;
 };
 
 class Input {
@@ -24,8 +25,10 @@ public:
     Input(Window &window);
     ~Input() = default;
 
-    void update();
     const MouseState& getMouseState() const {
         return mouseState_;
     }
+
+    void update();
+    void setCursorLockState(bool lock);
 };

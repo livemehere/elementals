@@ -41,9 +41,7 @@ int main() {
 
             ImGui::End();
 
-            if (mouseState.leftBtnPressed) {
-                std::cout << "presedd\n";
-            }
+            input.setCursorLockState(mouseState.leftBtnDown);
 
             win.update();
         }

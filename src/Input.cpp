@@ -37,3 +37,8 @@ void Input::update() {
 
 
 }
+
+void Input::setCursorLockState(bool lock) {
+    mouseState_.lock = lock;
+    glfwSetInputMode(window_.get(), GLFW_CURSOR, lock ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+}
