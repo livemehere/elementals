@@ -162,6 +162,11 @@ void World::update() {
     if (glfwGetKey(native_window, GLFW_KEY_Q) == GLFW_PRESS) {
         viewTransform.position.y -=moveStep * deltaTime;
     }
+
+    auto& mouseState = input.getMouseState();
+    viewTransform.rotation.y -= mouseState.deltaX * deltaTime;
+    viewTransform.rotation.x -= mouseState.deltaY * deltaTime;
+
 }
 
 void World::render() {
