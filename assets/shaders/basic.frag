@@ -10,7 +10,7 @@ uniform vec4 uColor;
 
 void main()
 {
-//    FragColor = texture(uTexture, vTexCoord) * uColor;
+    FragColor = texture(uTexture, vTexCoord) * uColor;
     /** for normal direction debug */
-     FragColor = vec4(vNormal * 0.5 + 0.5, 0.8);
+//     FragColor = vec4(vNormal * 0.5 + 0.5, 0.8);
 }
