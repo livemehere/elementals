@@ -6,7 +6,7 @@
 
 struct MeshRenderObject {
     Transform transform;
-    Mesh* mesh;
+    const Mesh& mesh;
     Material* material;
 };
 

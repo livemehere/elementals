@@ -6,7 +6,7 @@
 
 #include "graphics/Shader.h"
 
-World::World()  {
+World::World(ResourceManager& resourceManager) : resourceManager_(resourceManager)  {
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // render as wireframe
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -16,14 +16,16 @@ World::World()  {
     // glFrontFace(GL_CCW);
     // glCullFace(GL_BACK);
 
+     const Mesh& plane = resourceManager.getPlaneMesh();
+
     /* setup objects */
     meshObjects.push_back({
         .transform = {
             .position = {-1.0f,0.0f,0.0f},
-            .rotation = {0.0f,0.0f,0.0f},
+            .rotation = {-90.0f,0.0f,0.0f},
             .scale = {1.0f,1.0f,1.0f},
         },
-        .mesh = &quadMesh,
+        .mesh = plane,
         .material = &white,
     });
 
@@ -33,7 +35,7 @@ World::World()  {
         .rotation = {0.0f,0.0f,0.0f},
         .scale = {1.0f,1.0f,1.0f},
     },
-    .mesh = &quadMesh,
+    .mesh = plane,
     .material = &green,
 });
 
@@ -42,6 +44,7 @@ World::World()  {
 void World::update(float dt) {
     for (auto& obj : meshObjects) {
         // update game logic
+        obj.transform.rotation.x += 1.0f;
     }
 }
 

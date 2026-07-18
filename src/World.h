@@ -11,6 +11,7 @@
 #include "rendering/mesh/MeshRenderer.h"
 #include "rendering/mesh/MeshRenderObject.h"
 #include "rendering/mesh/materials/BasicMaterial.h"
+#include "resources/ResourceManager.h"
 
 constexpr std::array<uint8_t,4> pixels = {
     255,255,255,255,
@@ -18,18 +19,8 @@ constexpr std::array<uint8_t,4> pixels = {
 
 class World {
 private:
-    Mesh quadMesh{
-         std::array{
-             Vertex{{ -0.5f, -0.5f, 0.0f}, {0.0f,0.0f}}, // left bottom
-             Vertex{{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}}, // right bottom
-             Vertex{{ -0.5f, 0.5f, 0.0f}, {0.0f, 1.0f}}, // left top
-             Vertex{{ 0.5f, 0.5f, 0.0f}, {1.0f, 1.0f}}, // right top
-         },
-        std::array<GLuint, 6>{
-            0, 1, 2,
-            1, 3, 2
-         }
-    };
+    ResourceManager& resourceManager_;
+
     Shader shader{"shaders/basic.vert", "shaders/basic.frag"};
     Texture2D texture{1,1,pixels};
     BasicMaterial white{shader,texture};
@@ -39,7 +30,7 @@ private:
     std::vector<MeshRenderObject> meshObjects;
 
 public:
-    World();
+    World(ResourceManager& resourceManager);
     ~World() = default;
 
     void update(float dt);

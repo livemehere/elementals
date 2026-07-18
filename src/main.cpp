@@ -9,6 +9,7 @@
 #include "World.h"
 #include "camera/Camera.h"
 #include "camera/FreeLookCameraController.h"
+#include "resources/ResourceManager.h"
 
 
 int main() {
@@ -18,11 +19,12 @@ int main() {
         win.init();
         win.create_window(1280, 720, "Elementals", true);
 
+        ResourceManager resourceManager;
         Input input{win};
         Camera camera;
         // camera.projection = OrthoGraphicProjection{};
         FreeLookCameraController cameraController;
-        World world;
+        World world{resourceManager};
 
         float lastFrameTime = static_cast<float>(glfwGetTime());
         while (!win.should_close()) {

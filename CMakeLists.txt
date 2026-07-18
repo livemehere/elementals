@@ -40,6 +40,12 @@ add_executable(Elementals src/main.cpp
         src/rendering/mesh/materials/BasicMaterial.h
         src/rendering/mesh/MeshRenderer.cpp
         src/rendering/mesh/MeshRenderer.h
+        src/resources/ResourceManager.cpp
+        src/resources/ResourceManager.h
+        src/resources/mesh/PrimitiveMeshes.cpp
+        src/resources/mesh/PrimitiveMeshes.h
+        src/resources/mesh/MeshData.h
+        src/rendering/mesh/Vertex.h
 )
 
 target_link_libraries(Elementals PRIVATE
