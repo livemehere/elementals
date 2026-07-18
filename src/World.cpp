@@ -49,11 +49,8 @@ void World::update(const glm::mat4& view, const glm::mat4& projection) {
     for (auto& obj : objects) {
         obj.material->bind(ctx);
 
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, obj.transform.position);
-        glm::mat4 quatMat = glm::mat4_cast(glm::quat(glm::radians(obj.transform.rotation)));
-        model *= quatMat;
-        model = glm::scale(model, obj.transform.scale);
+        glm::mat4 model = obj.transform.getModelMatrix();
+
         obj.material->shader.setMat4("uModel",model);
 
         obj.mesh->draw();
