@@ -24,6 +24,6 @@ public:
     }
 
     void setInt(const char* name, int value) const;
-    void setVec4(const char *name, glm::vec4 value) const;
-    void setMat4(const char *name, glm::mat4 value) const;
+    void setVec4(const char *name, const glm::vec4& value) const;
+    void setMat4(const char *name, const glm::mat4& value) const;
 };

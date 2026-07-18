@@ -26,7 +26,7 @@ World::World()  {
         .mesh = &quadMesh,
         .shader = &shader,
         .texture = &texture,
-        .color = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f}
+        .color = glm::vec4{0.6f, 0.8f, 0.0f, 1.0f}
     });
 
     objects.push_back({
