@@ -41,18 +41,15 @@ World::World()  {
 
 void World::update(const glm::mat4& view, const glm::mat4& projection) {
 
-    RenderContext ctx {
-        .view = view,
-        .projection = projection
-    };
 
     for (auto& obj : objects) {
+        const glm::mat4 model = obj.transform.getModelMatrix();
+        RenderContext ctx {
+            .model = model,
+            .view = view,
+            .projection = projection
+        };
         obj.material->bind(ctx);
-
-        glm::mat4 model = obj.transform.getModelMatrix();
-
-        obj.material->shader.setMat4("uModel",model);
-
         obj.mesh->draw();
     }
 
