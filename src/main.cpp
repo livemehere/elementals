@@ -23,7 +23,7 @@ int main() {
         Input input{win};
         Camera camera;
         camera.transform.position.z = 5.0f;
-        camera.transform.position.y = 5.0f;
+        camera.transform.position.y = 3.0f;
         camera.lookAt(glm::vec3(0.0f));
         // camera.projection = OrthoGraphicProjection{};
         FreeLookCameraController cameraController;
