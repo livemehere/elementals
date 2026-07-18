@@ -9,5 +9,5 @@ public:
 
     virtual ~Material() = default;
 
-    virtual void bind (const RenderContext& context) const = 0;
+    virtual void bind () const = 0;
 };

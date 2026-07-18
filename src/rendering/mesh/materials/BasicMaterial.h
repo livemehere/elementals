@@ -14,5 +14,5 @@ public:
 
     ~BasicMaterial() override = default;
 
-    void bind(const RenderContext& context) const override;
+    void bind() const override;
 };
