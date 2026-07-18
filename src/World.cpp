@@ -10,11 +10,11 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // render as wireframe
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    // disable back-face
-    // NOTE: if two size object needed, turn of culling
+    // Back-face culling (enable for one-sided meshes)
+    // NOTE: keep disabled when both sides of a surface must be visible.
     // glEnable(GL_CULL_FACE);
     // glFrontFace(GL_CCW);
-    // glCullFace(GL_FRONT);
+    // glCullFace(GL_BACK);
 
     /* setup objects */
     meshObjects.push_back({
