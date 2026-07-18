@@ -8,7 +8,8 @@
 #include "rendering/mesh/Mesh.h"
 #include "graphics/Shader.h"
 #include "graphics/Texture2D.h"
-#include "rendering/RenderObject.h"
+#include "rendering/mesh/MeshRenderer.h"
+#include "rendering/mesh/MeshRenderObject.h"
 #include "rendering/mesh/materials/BasicMaterial.h"
 
 constexpr std::array<uint8_t,4> pixels = {
@@ -29,13 +30,13 @@ private:
             1, 3, 2
          }
     };
-
     Shader shader{"shaders/basic.vert", "shaders/basic.frag"};
     Texture2D texture{1,1,pixels};
     BasicMaterial white{shader,texture};
     BasicMaterial green{shader,texture, {0.0f, 0.9f, 0.0f,1.0f}};
 
-    std::vector<RenderObject> objects;
+    MeshRenderer meshRenderer;
+    std::vector<MeshRenderObject> meshObjects;
 
 public:
     World();

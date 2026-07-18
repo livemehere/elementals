@@ -17,7 +17,7 @@ World::World()  {
     // glCullFace(GL_BACK);
 
     /* setup objects */
-    objects.push_back({
+    meshObjects.push_back({
         .transform = {
             .position = {-1.0f,0.0f,0.0f},
             .rotation = {0.0f,0.0f,0.0f},
@@ -27,7 +27,7 @@ World::World()  {
         .material = &white,
     });
 
-    objects.push_back({
+    meshObjects.push_back({
     .transform = {
         .position = {1.0f,0.0f,0.0f},
         .rotation = {0.0f,0.0f,0.0f},
@@ -40,20 +40,9 @@ World::World()  {
 }
 
 void World::update(const glm::mat4& view, const glm::mat4& projection) {
-
-
-    for (auto& obj : objects) {
-        const glm::mat4 model = obj.transform.getModelMatrix();
-        RenderContext ctx {
-            .model = model,
-            .view = view,
-            .projection = projection
-        };
-        obj.material->bind(ctx);
-        obj.mesh->draw();
+    for (auto& obj : meshObjects) {
+        meshRenderer.render({view, projection}, obj);
     }
-
-
 }
 
 void World::render() {
