@@ -8,5 +8,5 @@ void MeshRenderer::render(const RenderContext &context, const MeshRenderObject &
     object.material->shader.setMat4("uView",context.view);
     object.material->shader.setMat4("uProjection",context.projection);
     object.material->shader.setMat4("uModel", model);
-    object.mesh.draw();
+    object.mesh->draw();
 }

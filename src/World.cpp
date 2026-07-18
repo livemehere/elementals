@@ -25,7 +25,7 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
             .rotation = {-90.0f,0.0f,0.0f},
             .scale = {1.0f,1.0f,1.0f},
         },
-        .mesh = plane,
+        .mesh = &plane,
         .material = &white,
     });
 
@@ -35,7 +35,7 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
         .rotation = {0.0f,0.0f,0.0f},
         .scale = {1.0f,1.0f,1.0f},
     },
-    .mesh = plane,
+    .mesh = &plane,
     .material = &green,
 });
 
@@ -44,7 +44,7 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
 void World::update(float dt) {
     for (auto& obj : meshObjects) {
         // update game logic
-        obj.transform.rotation.x += 1.0f;
+        obj.transform.rotation.x += 1.0f * dt;
     }
 }
 
