@@ -4,4 +4,5 @@
 
 namespace PrimitiveMeshes {
     MeshData createPlane();
+    MeshData createCube();
 }

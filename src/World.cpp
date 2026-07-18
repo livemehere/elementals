@@ -16,8 +16,6 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
     // glFrontFace(GL_CCW);
     // glCullFace(GL_BACK);
 
-     const Mesh& plane = resourceManager.getPlaneMesh();
-
     /* setup objects */
     meshObjects.push_back({
         .transform = {
@@ -25,9 +23,19 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
             .rotation = {-90.0f,0.0f,0.0f},
             .scale = {5.0f,5.0f,5.0f},
         },
-        .mesh = &plane,
+        .mesh = &resourceManager.getPlaneMesh(),
         .material = &white,
     });
+
+    meshObjects.push_back({
+       .transform = {
+           .position = {0.0f,1.0f,0.0f},
+           .rotation = {0.0f,0.0f,0.0f},
+           .scale = {1.0f,1.0f,1.0f},
+       },
+       .mesh = &resourceManager.getCubeMesh(),
+       .material = &green,
+   });
 }
 
 void World::update(float dt) {
