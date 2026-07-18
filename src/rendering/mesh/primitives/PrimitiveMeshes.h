@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./MeshData.h"
+#include "../MeshData.h"
 
 namespace PrimitiveMeshes {
     MeshData createPlane();

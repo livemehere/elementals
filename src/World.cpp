@@ -21,30 +21,17 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
     /* setup objects */
     meshObjects.push_back({
         .transform = {
-            .position = {-1.0f,0.0f,0.0f},
+            .position = {0.0f,0.0f,0.0f},
             .rotation = {-90.0f,0.0f,0.0f},
-            .scale = {1.0f,1.0f,1.0f},
+            .scale = {5.0f,5.0f,5.0f},
         },
         .mesh = &plane,
         .material = &white,
     });
-
-    meshObjects.push_back({
-    .transform = {
-        .position = {1.0f,0.0f,0.0f},
-        .rotation = {0.0f,0.0f,0.0f},
-        .scale = {1.0f,1.0f,1.0f},
-    },
-    .mesh = &plane,
-    .material = &green,
-});
-
 }
 
 void World::update(float dt) {
     for (auto& obj : meshObjects) {
-        // update game logic
-        obj.transform.rotation.x += 1.0f * dt;
     }
 }
 

@@ -1,6 +1,6 @@
 #include "ResourceManager.h"
 
-#include "mesh/PrimitiveMeshes.h"
+#include "../rendering/mesh/primitives/PrimitiveMeshes.h"
 
 const Mesh & ResourceManager::getPlaneMesh() {
     if (!planeMesh_) {
