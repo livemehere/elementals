@@ -39,10 +39,6 @@ World::World()  {
 
 }
 
-World::~World() {
-
-}
-
 void World::update(const glm::mat4& view, const glm::mat4& projection) {
 
     RenderContext ctx {

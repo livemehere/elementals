@@ -6,7 +6,7 @@
 
 class BasicMaterial : public Material {
 public:
-    glm::vec4 color;
+    const glm::vec4 color;
     const Texture2D& texture;
 
     BasicMaterial(const Shader &shader, const Texture2D& texture, const glm::vec4 color = {1.0f,1.0f,1.0f,1.0f})
@@ -14,5 +14,5 @@ public:
 
     ~BasicMaterial() override = default;
 
-    void bind(const RenderContext& context) override;
+    void bind(const RenderContext& context) const override;
 };

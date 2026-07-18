@@ -39,7 +39,7 @@ private:
 
 public:
     World();
-    ~World();
+    ~World() = default;
 
     void update(const glm::mat4& view, const glm::mat4& projection);
     void render();

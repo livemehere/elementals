@@ -1,6 +1,6 @@
 #include "BasicMaterial.h"
 
-void BasicMaterial::bind(const RenderContext& context) {
+void BasicMaterial::bind(const RenderContext& context) const {
     shader.use();
 
     // texture
