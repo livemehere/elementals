@@ -38,3 +38,12 @@ glm::mat4 Camera::getProjectionMatrix(const WindowSize &size) {
     }
     return projectionMatrix_;
 }
+
+void Camera::lookAt(const glm::vec3& target) {
+    glm::vec3 dir = target - transform.position;
+    dir = glm::normalize(dir);
+
+    constexpr glm::vec3 up = glm::vec3(0.0f, 1.0f,0.0f);
+    const glm::quat rotationQuat = glm::quatLookAt(dir, up);
+    transform.rotation = glm::degrees(glm::eulerAngles(rotationQuat));
+}

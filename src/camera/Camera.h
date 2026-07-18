@@ -51,4 +51,6 @@ public:
     glm::vec3 getRight() const {
         return getOrientation() * glm::vec3(1.0f, 0.0f, 0.0f);
     }
+
+    void lookAt(const glm::vec3& target);
 };
