@@ -1,6 +1,6 @@
 #include "common.h"
 #include "World.h"
-#include "./meshRenderer/Transform.h"
+#include "./rendering/Transform.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -24,8 +24,7 @@ World::World()  {
             .scale = {1.0f,1.0f,1.0f},
         },
         .mesh = &quadMesh,
-        .shader = &shader,
-        .texture = &texture,
+        .material = &material,
         .color = glm::vec4{0.6f, 0.8f, 0.0f, 1.0f}
     });
 
@@ -36,8 +35,7 @@ World::World()  {
         .scale = {1.0f,1.0f,1.0f},
     },
     .mesh = &quadMesh,
-    .shader = &shader,
-    .texture = &texture,
+    .material = &material,
     .color = glm::vec4{0.8f, 0.8f, 0.0f, 1.0f}
 });
 
@@ -49,19 +47,21 @@ World::~World() {
 
 void World::update(const glm::mat4& view, const glm::mat4& projection) {
 
+    RenderContext ctx {
+        .view = view,
+        .projection = projection
+    };
+
     for (auto& obj : objects) {
-        obj.texture->bind(0);
-        obj.shader->use();
-        obj.shader->setInt("uTexture",0);
-        obj.shader->setVec4("uColor",obj.color);
+        obj.material->bind(ctx);
+
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, obj.transform.position);
         glm::mat4 quatMat = glm::mat4_cast(glm::quat(glm::radians(obj.transform.rotation)));
         model *= quatMat;
         model = glm::scale(model, obj.transform.scale);
-        obj.shader->setMat4("uModel",model);
-        obj.shader->setMat4("uView",view);
-        obj.shader->setMat4("uProjection",projection);
+        obj.material->shader.setMat4("uModel",model);
+
         obj.mesh->draw();
     }
 

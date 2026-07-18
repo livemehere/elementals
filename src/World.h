@@ -5,10 +5,11 @@
 
 #include <glm/glm.hpp>
 
-#include "meshRenderer/Mesh.h"
+#include "rendering/mesh/Mesh.h"
 #include "graphics/Shader.h"
 #include "graphics/Texture2D.h"
-#include "meshRenderer/RenderObject.h"
+#include "rendering/RenderObject.h"
+#include "rendering/mesh/materials/BasicMaterial.h"
 
 constexpr std::array<uint8_t,4> pixels = {
     255,255,255,255,
@@ -31,6 +32,7 @@ private:
 
     Shader shader{"shaders/basic.vert", "shaders/basic.frag"};
     Texture2D texture{1,1,pixels};
+    BasicMaterial material{shader,texture};
 
     std::vector<RenderObject> objects;
 

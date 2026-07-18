@@ -1,4 +1,4 @@
-#include "../meshRenderer/Mesh.h"
+#include "Mesh.h"
 
 Mesh::Mesh(std::span<const Vertex> vertices, std::span<const GLuint> indices) : indexCount(static_cast<GLsizei>(indices.size())){
     // VAO
