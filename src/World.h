@@ -24,7 +24,8 @@ private:
     Shader shader{"shaders/basic.vert", "shaders/basic.frag"};
     Texture2D texture{1,1,pixels};
     BasicMaterial white{shader,texture};
-    BasicMaterial green{shader,texture, {0.0f, 0.9f, 0.0f,1.0f}};
+    BasicMaterial green{shader,texture, {0.2f, 0.5f, 0.1f,1.0f}};
+    BasicMaterial orange{shader,texture, {1.0f, 0.5f, 0.3f,1.0f}};
 
     MeshRenderer meshRenderer;
     std::vector<MeshRenderObject> meshObjects;

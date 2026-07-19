@@ -30,6 +30,11 @@ int main() {
         FreeLookCameraController cameraController;
         World world{resourceManager};
 
+        AmbientLight ambientLight = {
+            .color = glm::vec3(1.0f,1.0f,1.0f),
+            .intensity = 0.5f
+        };
+
         float lastFrameTime = static_cast<float>(glfwGetTime());
         while (!win.should_close()) {
 
@@ -51,7 +56,8 @@ int main() {
             /* render */
             RenderContext ctx{
                .view = camera.getViewMatrix(),
-               .projection = camera.getProjectionMatrix(size)
+               .projection = camera.getProjectionMatrix(size),
+               .ambientLight = ambientLight,
             };
 
             world.render(ctx);
@@ -86,6 +92,10 @@ int main() {
                     camera.projection = OrthoGraphicProjection{};
                 }
             }
+
+            ImGui::SeparatorText("AmbientLight");
+            ImGui::DragFloat3("color", glm::value_ptr(ambientLight.color), 0.1f);
+            ImGui::DragFloat("intensity", &ambientLight.intensity, 0.1f);
 
             ImGui::End();
             win.update();
