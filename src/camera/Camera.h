@@ -38,7 +38,7 @@ public:
     Camera() = default;
     ~Camera() = default;
 
-    void update();
+    void update(float dt);
     glm::mat4 getViewMatrix() const;
     glm::mat4 getProjectionMatrix(const WindowSize& size);
 

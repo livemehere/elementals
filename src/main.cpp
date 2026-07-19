@@ -1,14 +1,15 @@
-#include "common.h"
-
 #include <iostream>
 #include <imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "core/Input.h"
 #include "core/Window.h"
-#include "World.h"
+#include "Scene.h"
 #include "camera/Camera.h"
 #include "camera/FreeLookCameraController.h"
+#include "graphics/Texture2D.h"
+#include "rendering/Renderer.h"
+#include "rendering/mesh/materials/BasicMaterial.h"
 #include "resources/ResourceManager.h"
 
 
@@ -19,20 +20,66 @@ int main() {
         win.init();
         win.create_window(1280, 720, "Elementals", true);
 
-        ResourceManager resourceManager;
         Input input{win};
-        Camera camera;
-        camera.transform.position.x = 3.0f;
-        camera.transform.position.z = 3.0f;
-        camera.transform.position.y = 3.0f;
-        camera.lookAt(glm::vec3(0.0f));
-        // camera.projection = OrthoGraphicProjection{};
+        ResourceManager resourceManager;
+        Scene scene;
+        Renderer renderer;
         FreeLookCameraController cameraController;
-        World world{resourceManager};
+
+        /* TEMP SETUP */
+        scene.camera.transform.position.x = 3.0f;
+        scene.camera.transform.position.z = 3.0f;
+        scene.camera.transform.position.y = 3.0f;
+        scene.camera.lookAt(glm::vec3(0.0f));
+        // scene.camera.projection = OrthoGraphicProjection{};
+
+        std::array<uint8_t,4> pixels = {
+            255,255,255,255,
+        };
+        Shader basicShader{"shaders/basic.vert", "shaders/basic.frag"};
+        Shader lightShader{"shaders/basic.vert", "shaders/light.frag"};
+        Texture2D whiteTexture{1,1,pixels};
+        BasicMaterial lightMaterial{lightShader,whiteTexture};
+        BasicMaterial green{basicShader,whiteTexture, {0.2f, 0.5f, 0.1f,1.0f}};
+        BasicMaterial orange{basicShader,whiteTexture, {1.0f, 0.5f, 0.3f,1.0f}};
+
+        // ground
+        scene.meshObjects.push_back({
+            .transform = {
+                .position = {0.0f,0.0f,0.0f},
+                .rotation = {-90.0f,0.0f,0.0f},
+                .scale = {5.0f,5.0f,5.0f},
+            },
+            .mesh = &resourceManager.getPlaneMesh(),
+            .material = &green,
+        });
+
+        // cube
+        scene.meshObjects.push_back({
+           .transform = {
+               .position = {0.0f,1.1f,0.0f},
+               .rotation = {0.0f,0.0f,0.0f},
+               .scale = {1.0f,1.0f,1.0f},
+           },
+           .mesh = &resourceManager.getCubeMesh(),
+           .material = &orange,
+       });
+
+        // light
+        scene.meshObjects.push_back({
+           .transform = {
+               .position = {1.0f,1.0f,0.0f},
+               .rotation = {0.0f,0.0f,0.0f},
+               .scale = {0.1f,0.1f,0.1f},
+           },
+           .mesh = &resourceManager.getCubeMesh(),
+           .material = &lightMaterial,
+        });
+        /* ---------- */
 
         glm::vec3 lightPos(1.0f, 1.0f, 0.0f);
 
-        float lastFrameTime = static_cast<float>(glfwGetTime());
+        auto lastFrameTime = static_cast<float>(glfwGetTime());
         while (!win.should_close()) {
 
             /* currentFrame info */
@@ -46,19 +93,12 @@ int main() {
             /* update */
             win.pollEvents();
             input.update();
-            cameraController.update(camera, input, dt);
-            camera.update();
-            world.update(dt);
+            cameraController.update(scene.camera, input, dt);
 
-            /* render */
-            RenderContext ctx{
-               .view = camera.getViewMatrix(),
-               .projection = camera.getProjectionMatrix(size),
-               .viewPos = camera.transform.position,
-               .lightPos = lightPos,
-            };
-
-            world.render(ctx);
+            scene.update(dt);
+            renderer.beginFrame(scene.camera, size);
+            renderer.render(scene);
+            renderer.endFrame();
 
             /* render debug */
             ImGui::SetNextWindowSize(ImVec2(250,150), ImGuiCond_Once);
@@ -79,16 +119,16 @@ int main() {
 
             ImGui::Begin("Properties");
             ImGui::SeparatorText("Camera");
-            ImGui::DragFloat3("position", glm::value_ptr(camera.transform.position), 1.0f);
-            ImGui::DragFloat3("rotation", glm::value_ptr(camera.transform.rotation), 1.0f);
+            ImGui::DragFloat3("position", glm::value_ptr(scene.camera.transform.position), 1.0f);
+            ImGui::DragFloat3("rotation", glm::value_ptr(scene.camera.transform.rotation), 1.0f);
 
             static bool is3DMode = true;
             if (ImGui::Selectable(is3DMode ? "3D" : "2D", is3DMode)) {
                 is3DMode = !is3DMode;
                 if (is3DMode) {
-                    camera.projection = PerspectiveProjection{};
+                    scene.camera.projection = PerspectiveProjection{};
                 }else {
-                    camera.projection = OrthoGraphicProjection{};
+                    scene.camera.projection = OrthoGraphicProjection{};
                 }
             }
 

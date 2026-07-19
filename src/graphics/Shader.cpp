@@ -61,3 +61,11 @@ void Shader::setMat4(const char *name, const glm::mat4& value) const {
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 }
 
+void Shader::bindUniformBlock(const char *name, const GLuint bindingPoint) const {
+    const GLuint blockIndex = glGetUniformBlockIndex(id_, name);
+    if (blockIndex == GL_INVALID_INDEX) {
+        throw std::runtime_error(std::format("Uniform block '{}' not found", name));
+    }
+    glUniformBlockBinding(id_, blockIndex, bindingPoint);
+}
+

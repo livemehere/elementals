@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void Camera::update() {
+void Camera::update(float dt) {
     viewMatrix_ = glm::mat4(1.0f);
 
     // T

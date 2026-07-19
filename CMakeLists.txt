@@ -14,8 +14,8 @@ find_package(glm CONFIG REQUIRED)
 add_executable(Elementals src/main.cpp
         src/core/Window.cpp
         src/core/Window.h
-        src/World.cpp
-        src/World.h
+        src/Scene.cpp
+        src/Scene.h
         src/core/utils.h
         src/core/Input.cpp
         src/core/Input.h
@@ -33,7 +33,6 @@ add_executable(Elementals src/main.cpp
         src/rendering/mesh/Mesh.cpp
         src/rendering/mesh/Mesh.h
         src/rendering/mesh/MeshRenderObject.h
-        src/rendering/RenderContext.h
         src/rendering/Transform.h
         src/rendering/mesh/materials/Material.h
         src/rendering/mesh/materials/BasicMaterial.cpp
@@ -46,6 +45,9 @@ add_executable(Elementals src/main.cpp
         src/rendering/mesh/primitives/PrimitiveMeshes.h
         src/rendering/mesh/MeshData.h
         src/rendering/mesh/Vertex.h
+        src/rendering/mesh/Lights.h
+        src/rendering/Renderer.cpp
+        src/rendering/Renderer.h
 )
 
 target_link_libraries(Elementals PRIVATE

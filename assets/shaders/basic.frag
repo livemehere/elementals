@@ -1,5 +1,11 @@
 #version 410 core
 
+layout (std140) uniform CameraData {
+    mat4 uView;
+    mat4 uProjection;
+    vec4 uCameraPosition;
+};
+
 in vec2 vTexCoord;
 in vec3 vNormal;
 in vec3 vPos;
@@ -8,7 +14,6 @@ out vec4 FragColor;
 
 uniform sampler2D uTexture;
 uniform vec4 uColor;
-uniform vec3 uViewPos;
 
 // temp
 uniform vec3 uLightPos;
@@ -22,7 +27,7 @@ void main()
 
     // Phong Light
     vec3 lightDir = normalize(uLightPos - vPos);
-    vec3 viewDir = normalize(uViewPos - vPos);
+    vec3 viewDir = normalize(uCameraPosition.xyz - vPos);
     vec3 reflectDir = reflect(-lightDir, normal);
 
     vec4 ambient = vec4(lightColor * lightIntensity, 1.0);
