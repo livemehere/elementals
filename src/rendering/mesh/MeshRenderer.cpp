@@ -8,6 +8,7 @@ void MeshRenderer::render(const RenderContext &context, const MeshRenderObject &
 
     // ambient light
     object.material->shader.setVec3("uLightPos",context.lightPos);
+    object.material->shader.setVec3("uViewPos",context.viewPos);
 
     object.material->shader.setMat4("uView",context.view);
     object.material->shader.setMat4("uProjection",context.projection);

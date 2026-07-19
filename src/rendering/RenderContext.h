@@ -5,5 +5,6 @@
 struct RenderContext {
     const glm::mat4& view;
     const glm::mat4& projection;
+    glm::vec3& viewPos;
     glm::vec3& lightPos;
 };
