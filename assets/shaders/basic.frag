@@ -11,7 +11,7 @@ uniform vec4 uColor;
 
 // temp
 uniform vec3 uLightPos;
-vec3 lightColor = vec3(1.0, 0.0, 0.0);
+vec3 lightColor = vec3(1.0, 1.0, 1.0);
 float lightIntensity = 0.5;
 
 void main()
