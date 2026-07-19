@@ -1,6 +1,5 @@
 #pragma once
 #include "../../../graphics/Shader.h"
-#include "../../RenderContext.h"
 
 class Material {
 public:

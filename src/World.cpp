@@ -47,7 +47,7 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
            .scale = {0.3f,0.3f,0.3f},
        },
        .mesh = &resourceManager.getCubeMesh(),
-       .material = &white,
+       .material = &lightMaterial,
     });
 }
 
@@ -62,7 +62,7 @@ void World::render(const RenderContext& context) {
         meshRenderer.render(context, obj);
 
         // temp update
-        if (obj.material == &white) {
+        if (obj.material == &lightMaterial) {
             obj.transform.position = context.lightPos;
         }
     }
