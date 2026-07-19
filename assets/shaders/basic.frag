@@ -44,12 +44,24 @@ vec3 calculateAmbient(vec3 albedo)
 vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal)
 {
     /** diffuse */
-    vec3 lightPos = light.positionRange.rgb;
-    vec3 lightColor = light.colorIntensity.rgb;
-    float lightIntensity = light.colorIntensity.w;
-    vec3 lightDir = normalize(lightPos - vPos);
+    vec3 position = light.positionRange.rgb;
+    float range = light.positionRange.w;
+    vec3 toLight = position - vPos;
+    float distance = length(toLight);
+
+    if(distance > range){
+        return vec3(0.0);
+    }
+
+    vec3 lightDir = toLight / max(distance, 0.0001);
     float diff = max(dot(normal, lightDir),0);
-    vec3 diffuse = albedo * lightColor * lightIntensity * diff;
+    float attenuation = clamp(1.0 - distance / range, 0.0, 1.0);
+    attenuation *=attenuation;
+
+    vec3 color = light.colorIntensity.rgb;
+    float intensity = light.colorIntensity.w;
+
+    vec3 diffuse = albedo * color * intensity * diff * attenuation;
 
     /** specular */
     // TODO:

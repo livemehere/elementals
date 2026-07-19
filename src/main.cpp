@@ -67,8 +67,8 @@ int main() {
 
         // light
         scene.pointLights.push_back({
-            .position = {1.0f, 1.0f,0.0f},
-            .range = 10.0f,
+            .position = {1.0f, 1.0f,1.0f},
+            .range = 5.0f,
             .color = {1.0f,1.0f,1.0f},
             .intensity = 1.0f,
         });

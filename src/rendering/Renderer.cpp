@@ -49,7 +49,7 @@ void Renderer::updateLightsBuffer(Scene& scene) {
    data.ambientLightColorIntensity = glm::vec4(scene.ambientLight.color, scene.ambientLight.intensity);
    data.lightCounts = glm::ivec4(
       0,
-      static_cast<int>(scene.pointLights.size()),
+      static_cast<int>(std::min(scene.pointLights.size(),MAX_POINT_LIGHTS)),
       0,
       0
    );
