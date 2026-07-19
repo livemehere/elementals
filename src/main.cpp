@@ -54,7 +54,7 @@ int main() {
             RenderContext ctx{
                .view = camera.getViewMatrix(),
                .projection = camera.getProjectionMatrix(size),
-               .lightPos = lightPos
+               .lightPos = lightPos,
             };
 
             world.render(ctx);

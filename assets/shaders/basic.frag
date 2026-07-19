@@ -9,17 +9,15 @@ out vec4 FragColor;
 uniform sampler2D uTexture;
 uniform vec4 uColor;
 
-
 // temp
-uniform vec3 lightPos;
-vec3 lightColor = vec3(1.0, 1.0, 1.0);
+uniform vec3 uLightPos;
+vec3 lightColor = vec3(1.0, 0.0, 0.0);
 float lightIntensity = 0.5;
-
 
 void main()
 {
     vec3 normal = normalize(vNormal);
-    vec3 lightDir = normalize(lightPos - vPos);
+    vec3 lightDir = normalize(uLightPos - vPos);
 
     // Phong Light
     vec4 ambient = vec4(lightColor * lightIntensity, 1.0);
