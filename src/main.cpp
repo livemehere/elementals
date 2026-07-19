@@ -66,12 +66,12 @@ int main() {
        });
 
         // light
-        // scene.pointLights.push_back({
-        //     .position = {1.0f, 1.0f,0.0f},
-        //     .color = {1.0f,1.0f,1.0f},
-        //     .intensity = 1.0f,
-        //     .range = 10.0f
-        // });
+        scene.pointLights.push_back({
+            .position = {1.0f, 1.0f,0.0f},
+            .range = 10.0f,
+            .color = {1.0f,1.0f,1.0f},
+            .intensity = 1.0f,
+        });
         /* ---------- */
 
         glm::vec3 lightPos(1.0f, 1.0f, 0.0f);
@@ -131,6 +131,7 @@ int main() {
 
             ImGui::SeparatorText("Light");
             ImGui::DragFloat("ambientLight.intensity", &scene.ambientLight.intensity, 0.1f);
+            ImGui::DragFloat("pointLight.intensity", &scene.pointLights[0].intensity, 0.1f);
 
             ImGui::End();
             win.update();

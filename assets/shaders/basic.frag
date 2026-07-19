@@ -29,10 +29,10 @@ in vec2 vTexCoord;
 in vec3 vNormal;
 in vec3 vPos;
 
-out vec4 FragColor;
-
 uniform sampler2D uTexture;
 uniform vec4 uColor;
+
+out vec4 FragColor;
 
 vec3 calculateAmbient(vec3 albedo)
 {
@@ -41,7 +41,7 @@ vec3 calculateAmbient(vec3 albedo)
     return albedo * color * intensity;
 }
 
-vec3 calculatePointLight(PointLight light, vec3 normal)
+vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal)
 {
     /** diffuse */
     vec3 lightPos = light.positionRange.rgb;
@@ -49,7 +49,7 @@ vec3 calculatePointLight(PointLight light, vec3 normal)
     float lightIntensity = light.colorIntensity.w;
     vec3 lightDir = normalize(lightPos - vPos);
     float diff = max(dot(normal, lightDir),0);
-    vec3 diffuse = lightColor * lightIntensity * diff;
+    vec3 diffuse = albedo * lightColor * lightIntensity * diff;
 
     /** specular */
     // TODO:
@@ -70,7 +70,7 @@ void main()
     vec3 viewDir = normalize(camera.position.xyz - vPos);
     int pointLightCount = min(lights.lightCounts.y,MAX_POINT_LIGHTS);
     for(int i=0; i<pointLightCount; i++){
-       result += calculatePointLight(lights.pointLights[i], normal);
+       result += calculatePointLight(lights.pointLights[i], albedo, normal);
     }
 
 
