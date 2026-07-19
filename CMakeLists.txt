@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.2)
-project(ElementalsProject LANGUAGES CXX)
+project(TEngine LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,7 +11,7 @@ find_package(glm CONFIG REQUIRED)
 
 
 
-add_executable(Elementals src/main.cpp
+add_executable(TEngine src/main.cpp
         src/core/Window.cpp
         src/core/Window.h
         src/Scene.cpp
@@ -45,12 +45,12 @@ add_executable(Elementals src/main.cpp
         src/rendering/mesh/primitives/PrimitiveMeshes.h
         src/rendering/mesh/MeshData.h
         src/rendering/mesh/Vertex.h
-        src/rendering/mesh/Lights.h
+        src/rendering/Lights.h
         src/rendering/Renderer.cpp
         src/rendering/Renderer.h
 )
 
-target_link_libraries(Elementals PRIVATE
+target_link_libraries(TEngine PRIVATE
         glfw
         glad::glad
         imgui::imgui
@@ -58,7 +58,7 @@ target_link_libraries(Elementals PRIVATE
 )
 
 # TODO: COPY asset file to packaging.
-target_compile_definitions(Elementals PRIVATE
+target_compile_definitions(TEngine PRIVATE
         ASSET_ROOT="${CMAKE_SOURCE_DIR}/assets"
 )
 

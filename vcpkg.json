@@ -1,6 +1,6 @@
 {
   "version-string": "0.0.1",
-  "name": "elementals",
+  "name": "t-engine",
   "dependencies": [
     "glfw3",
     "glad",

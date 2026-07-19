@@ -18,7 +18,7 @@ int main() {
     try {
         Window win;
         win.init();
-        win.create_window(1280, 720, "Elementals", true);
+        win.create_window(1280, 720, "T-Engine Sandbox", true);
 
         Input input{win};
         ResourceManager resourceManager;
@@ -66,14 +66,11 @@ int main() {
        });
 
         // light
-        scene.meshObjects.push_back({
-           .transform = {
-               .position = {1.0f,1.0f,0.0f},
-               .rotation = {0.0f,0.0f,0.0f},
-               .scale = {0.1f,0.1f,0.1f},
-           },
-           .mesh = &resourceManager.getCubeMesh(),
-           .material = &lightMaterial,
+        scene.pointLights.push_back({
+            .position = {1.0f, 1.0f,0.0f},
+            .color = {1.0f,1.0f,1.0f},
+            .intensity = 1.0f,
+            .range = 10.0f
         });
         /* ---------- */
 
