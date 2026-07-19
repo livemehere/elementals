@@ -1,8 +1,16 @@
-# elementals (cellular automata) 
+# TEngine
 
-## step1. 2D renderer with opengl
+OpenGL 2D, 3D Game engine.   
 
-![img.png](docs/step1.%202D%20renderer%20with%20opengl.png)
+## Goal
+
+This engine is not designed to be a general-purpose game engine.   
+Instead, it focuses on combining essential engine functionality with a curated set of built-in systems and opinionated features.   
+The goal is to accelerate the journey from idea to playable experience while giving every project a distinctive identity shaped by the engine itself.
+
+## WIP
+
+### Core system ... 
 
 ![img.png](docs/2.mesh-wire.png)
 
