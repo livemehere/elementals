@@ -132,6 +132,7 @@ int main() {
             ImGui::SeparatorText("Light");
             ImGui::DragFloat("ambientLight.intensity", &scene.ambientLight.intensity, 0.1f);
             ImGui::DragFloat("pointLight.intensity", &scene.pointLights[0].intensity, 0.1f);
+            ImGui::DragFloat3("pointLight.position", glm::value_ptr(scene.pointLights[0].position), 0.1f);
 
             ImGui::End();
             win.update();

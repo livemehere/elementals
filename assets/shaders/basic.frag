@@ -41,7 +41,7 @@ vec3 calculateAmbient(vec3 albedo)
     return albedo * color * intensity;
 }
 
-vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal)
+vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDir)
 {
     /** diffuse */
     vec3 position = light.positionRange.rgb;
@@ -64,9 +64,15 @@ vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal)
     vec3 diffuse = albedo * color * intensity * diff * attenuation;
 
     /** specular */
-    // TODO:
+    float shiniess = 32.0;
+    float specularStrength = 1.0;
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float specularAngle = max(dot(viewDir, reflectDir),0.0);
+    float specularFactor = pow(specularAngle, shiniess);
 
-    return diffuse;
+    vec3 specular = color * intensity * attenuation * specularFactor * specularStrength;
+
+    return diffuse + specular;
 }
 
 void main()
@@ -82,7 +88,7 @@ void main()
     vec3 viewDir = normalize(camera.position.xyz - vPos);
     int pointLightCount = min(lights.lightCounts.y,MAX_POINT_LIGHTS);
     for(int i=0; i<pointLightCount; i++){
-       result += calculatePointLight(lights.pointLights[i], albedo, normal);
+       result += calculatePointLight(lights.pointLights[i], albedo, normal, viewDir);
     }
 
 
