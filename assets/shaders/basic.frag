@@ -26,7 +26,8 @@ void main()
     vec3 reflectDir = reflect(-lightDir, normal);
 
     vec4 ambient = vec4(lightColor * lightIntensity, 1.0);
-    float diffuse = max(dot(normal, lightDir),0);
+    float diff = max(dot(normal, lightDir),0);
+    vec4 diffuse = vec4(lightColor * lightIntensity * diff, 1.0);
 
     float spec = pow(max(dot(viewDir, reflectDir),0.0),32);
     vec4 specular = vec4(specularIntensity * spec * lightColor, 1.0);
