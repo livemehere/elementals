@@ -30,10 +30,7 @@ int main() {
         FreeLookCameraController cameraController;
         World world{resourceManager};
 
-        AmbientLight ambientLight = {
-            .color = glm::vec3(1.0f,1.0f,1.0f),
-            .intensity = 0.5f
-        };
+        glm::vec3 lightPos(1.0f, 1.0f, 0.0f);
 
         float lastFrameTime = static_cast<float>(glfwGetTime());
         while (!win.should_close()) {
@@ -57,7 +54,7 @@ int main() {
             RenderContext ctx{
                .view = camera.getViewMatrix(),
                .projection = camera.getProjectionMatrix(size),
-               .ambientLight = ambientLight,
+               .lightPos = lightPos
             };
 
             world.render(ctx);
@@ -79,7 +76,8 @@ int main() {
 
             ImGui::End();
 
-            ImGui::Begin("Camera");
+            ImGui::Begin("Properties");
+            ImGui::SeparatorText("Camera");
             ImGui::DragFloat3("position", glm::value_ptr(camera.transform.position), 1.0f);
             ImGui::DragFloat3("rotation", glm::value_ptr(camera.transform.rotation), 1.0f);
 
@@ -93,9 +91,8 @@ int main() {
                 }
             }
 
-            ImGui::SeparatorText("AmbientLight");
-            ImGui::DragFloat3("color", glm::value_ptr(ambientLight.color), 0.1f);
-            ImGui::DragFloat("intensity", &ambientLight.intensity, 0.1f);
+            ImGui::SeparatorText("Light");
+            ImGui::DragFloat3("light.position", glm::value_ptr(lightPos), 0.1f);
 
             ImGui::End();
             win.update();

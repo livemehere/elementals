@@ -53,11 +53,17 @@ World::World(ResourceManager& resourceManager) : resourceManager_(resourceManage
 
 void World::update(float dt) {
     for (auto& obj : meshObjects) {
+
     }
 }
 
 void World::render(const RenderContext& context) {
     for (auto& obj : meshObjects) {
         meshRenderer.render(context, obj);
+
+        // temp update
+        if (obj.material == &white) {
+            obj.transform.position = context.lightPos;
+        }
     }
 }

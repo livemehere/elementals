@@ -10,10 +10,14 @@ uniform mat4 uProjection;
 
 out vec2 vTexCoord;
 out vec3 vNormal;
+out vec3 vPos;
 
 void main()
 {
     gl_Position = uProjection * uView * uModel * vec4(aPos, 1.0);
     vTexCoord = aTexCoord;
-    vNormal = aNormal;
+
+    mat3 normalMatrix = mat3(transpose(inverse(uModel)));
+    vNormal = normalMatrix * aNormal;
+    vPos = vec3(uModel * vec4(aPos, 1.0));
 }
