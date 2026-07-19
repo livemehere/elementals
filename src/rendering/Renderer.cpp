@@ -17,10 +17,18 @@
 }; */
 
 Renderer::Renderer() {
+   /* camera */
    glGenBuffers(1, &cameraUBO);
    glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
    glBufferData(GL_UNIFORM_BUFFER, sizeof(GPUCameraData), nullptr, GL_DYNAMIC_DRAW);
    glBindBufferBase(GL_UNIFORM_BUFFER, UniformBinding::Camera, cameraUBO);
+   glBindBuffer(GL_UNIFORM_BUFFER,0);
+
+   /* lights */
+   glGenBuffers(1, &lightsUBO);
+   glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
+   glBufferData(GL_UNIFORM_BUFFER, sizeof(GPULightingData), nullptr, GL_DYNAMIC_DRAW);
+   glBindBufferBase(GL_UNIFORM_BUFFER, UniformBinding::Lights, lightsUBO);
    glBindBuffer(GL_UNIFORM_BUFFER,0);
 }
 
@@ -32,6 +40,15 @@ void Renderer::updateCameraBuffer(Camera &camera, const WindowSize& windowSize) 
       .position = glm::vec4(camera.transform.position, 1.0f)
    };
    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(GPUCameraData), &data);
+   glBindBuffer(GL_UNIFORM_BUFFER,0);
+}
+
+void Renderer::updateLightsBuffer() {
+   glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
+   const GPULightingData data{
+      // TODO:
+   };
+   glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(GPULightingData), &data);
    glBindBuffer(GL_UNIFORM_BUFFER,0);
 }
 

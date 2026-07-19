@@ -6,6 +6,7 @@
 void MeshRenderer::render(const MeshRenderObject &object) const {
 
     object.material->shader.bindUniformBlock("CameraData", UniformBinding::Camera);
+    object.material->shader.bindUniformBlock("LightsData", UniformBinding::Lights);
 
     const glm::mat4 model = object.transform.getModelMatrix();
     object.material->bind();

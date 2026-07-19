@@ -6,6 +6,10 @@ layout (std140) uniform CameraData {
     vec4 position;
 } camera;
 
+layout (std140) uniform LightsData {
+    // TODO:
+} lights;
+
 in vec2 vTexCoord;
 in vec3 vNormal;
 in vec3 vPos;
