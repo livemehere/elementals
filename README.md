@@ -17,3 +17,5 @@ The goal is to accelerate the journey from idea to playable experience while giv
 ![img.png](docs/3.mesh-normal.png)
 
 ![phong-light.gif](docs/phong-light.gif)
+
+![point-lights.png](docs/point-lights.png)
