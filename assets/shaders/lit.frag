@@ -101,14 +101,6 @@ void main()
        result += calculatePointLight(lights.pointLights[i], albedo, normal, viewDir);
     }
 
-
-    // Phong Light
-//    vec3 reflectDir = reflect(-lightDir, normal);
-//
-//
-//    float spec = pow(max(dot(viewDir, reflectDir),0.0),32);
-//    vec4 specular = vec4(specularIntensity * spec * lights.ambientLightColorIntensity.rgb, 1.0);
-
     float alpha = textureColor.a * material.baseColor.a;
     FragColor = vec4(result, alpha);
     /** for normal direction debug */
