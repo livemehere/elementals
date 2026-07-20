@@ -30,7 +30,9 @@ in vec3 vNormal;
 in vec3 vPos;
 
 struct Material {
-    sampler2D albedoTexture;
+    sampler2D albedo;
+    sampler2D specular;
+    int hasSpecularMap;
     vec4 baseColor;
     float shininess;
     float specularStrength;
@@ -74,14 +76,18 @@ vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDi
     float specularAngle = max(dot(viewDir, reflectDir),0.0);
     float specularFactor = pow(specularAngle, material.shininess);
 
+    float specularMask = 0.0;
     vec3 specular = color * intensity * attenuation * specularFactor * material.specularStrength;
+    if(material.hasSpecularMap != 0){
+       specularMask = texture(material.specular,vTexCoord).r;
+    }
 
-    return diffuse + specular;
+    return diffuse + specular * specularMask;
 }
 
 void main()
 {
-    vec4 textureColor = texture(material.albedoTexture, vTexCoord);
+    vec4 textureColor = texture(material.albedo, vTexCoord);
     vec3 albedo = textureColor.rgb * material.baseColor.rgb;
 
     /** ambient light */

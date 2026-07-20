@@ -23,5 +23,10 @@ public:
       glActiveTexture(GL_TEXTURE0 + slot);
       glBindTexture(GL_TEXTURE_2D, id_);
   }
+
+   static void unBind(GLuint slot = 0) {
+      glActiveTexture(GL_TEXTURE0 + slot);
+      glBindTexture(GL_TEXTURE_2D, 0);
+  }
 };
 

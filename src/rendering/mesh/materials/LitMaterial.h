@@ -7,6 +7,7 @@
 class LitMaterial : public Material {
 public:
     Texture2D& albedoTexture;
+    Texture2D* specularTexture = nullptr;
     glm::vec4 baseColor;
     float shininess;
     float specularStrength;

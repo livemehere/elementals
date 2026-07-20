@@ -39,13 +39,15 @@ int main() {
         };
         Texture2D whiteTexture{1,1,pixels};
         Texture2D boxTexture("textures/box.png");
+        Texture2D boxSpecularMapTexture("textures/box_specular_map.png");
 
         /* lit */
         Shader litShader{"shaders/basic.vert", "shaders/lit.frag"};
         litShader.bindUniformBlock("CameraData", UniformBinding::Camera);
         litShader.bindUniformBlock("LightsData", UniformBinding::Lights);
         LitMaterial white{litShader,whiteTexture};
-        LitMaterial orange{litShader,boxTexture};
+        LitMaterial boxMaterial{litShader,boxTexture, {0.2f,0.2f,0.2f,1.0f}};
+        boxMaterial.specularTexture = &boxSpecularMapTexture;
 
         /* unlit */
         Shader unlitShader{"shaders/basic.vert", "shaders/unlit.frag"};
@@ -70,30 +72,30 @@ int main() {
                .scale = {1.0f,1.0f,1.0f},
            },
            .mesh = &resourceManager.getCubeMesh(),
-           .material = &orange,
+           .material = &boxMaterial,
        });
 
         // light
         scene.pointLights.push_back({
             .position = {1.5f, 1.0f,0.0f},
             .range = 5.0f,
-            .color = {0.0f,0.0f,1.0f},
+            .color = {1.0f,1.0f,1.0f},
             .intensity = 1.0f,
         });
 
-        scene.pointLights.push_back({
-            .position = {-1.5f, 1.0f,0.0f},
-            .range = 5.0f,
-            .color = {1.0f,0.0f,0.0f},
-            .intensity = 1.0f,
-          });
-
-        scene.pointLights.push_back({
-           .position = {0.0f, 1.0f,1.0f},
-           .range = 5.0f,
-           .color = {0.0f,1.0f,0.0f},
-           .intensity = 1.0f,
-       });
+       //  scene.pointLights.push_back({
+       //      .position = {-1.5f, 1.0f,0.0f},
+       //      .range = 5.0f,
+       //      .color = {1.0f,0.0f,0.0f},
+       //      .intensity = 1.0f,
+       //    });
+       //
+       //  scene.pointLights.push_back({
+       //     .position = {0.0f, 1.0f,1.0f},
+       //     .range = 5.0f,
+       //     .color = {0.0f,1.0f,0.0f},
+       //     .intensity = 1.0f,
+       // });
         /* ---------- */
 
         auto lastFrameTime = static_cast<float>(glfwGetTime());
@@ -155,8 +157,8 @@ int main() {
             ImGui::DragFloat3("pointLight.position", glm::value_ptr(scene.pointLights[0].position), 0.1f);
 
             ImGui::SeparatorText("LitMaterial");
-            ImGui::DragFloat("shininess", &orange.shininess, 0.1f);
-            ImGui::DragFloat("specularStrength", &orange.specularStrength, 0.1f);
+            ImGui::DragFloat("shininess", &boxMaterial.shininess, 0.1f);
+            ImGui::DragFloat("specularStrength", &boxMaterial.specularStrength, 0.1f);
 
             ImGui::End();
 
