@@ -44,6 +44,7 @@ void Renderer::updateCameraBuffer(Scene& scene, const WindowSize& windowSize) {
 }
 
 void Renderer::updateLightsBuffer(Scene& scene) {
+   // TODO: upload light to GPU, only closed to camera for performance
    glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
    GPULightingData data{};
    data.ambientLightColorIntensity = glm::vec4(scene.ambientLight.color, scene.ambientLight.intensity);

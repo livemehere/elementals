@@ -40,15 +40,14 @@ int main() {
         Texture2D whiteTexture{1,1,pixels};
 
         /* lit */
-        Shader litShader{"shaders/lit.vert", "shaders/lit.frag"};
-        LitMaterial green{litShader,whiteTexture, {0.2f, 0.5f, 0.1f,1.0f}};
-        LitMaterial orange{litShader,whiteTexture, {1.0f, 0.5f, 0.3f,1.0f}};
-        /* all shader global */
+        Shader litShader{"shaders/basic.vert", "shaders/lit.frag"};
         litShader.bindUniformBlock("CameraData", UniformBinding::Camera);
         litShader.bindUniformBlock("LightsData", UniformBinding::Lights);
+        LitMaterial green{litShader,whiteTexture, {0.2f, 0.5f, 0.1f,1.0f}};
+        LitMaterial orange{litShader,whiteTexture, {1.0f, 0.5f, 0.3f,1.0f}};
 
         /* unlit */
-        Shader unlitShader{"shaders/lit.vert", "shaders/unlit.frag"};
+        Shader unlitShader{"shaders/basic.vert", "shaders/unlit.frag"};
         UnlitMaterial unlitMaterial{unlitShader,whiteTexture};
 
         // ground
