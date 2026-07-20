@@ -13,9 +13,6 @@ The goal is to accelerate the journey from idea to playable experience while giv
 
 ### Core system ... 
 
-
-
-
 <img width="1134" height="702" alt="2 mesh-wire" src="https://github.com/user-attachments/assets/c9d6839c-f4c0-4f57-b121-b26b0cf06994" />
 
 <img width="1234" height="664" alt="3 mesh-normal" src="https://github.com/user-attachments/assets/539245a7-419b-4997-9aaf-414abe9d93ab" />
