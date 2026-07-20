@@ -5,8 +5,8 @@ void LitMaterial::bind() const {
 
     // this material
     albedoTexture.bind(0);
-    shader.setInt("uAlbedoTexture",0);
-    shader.setVec4("uBaseColor",baseColor);
-    shader.setFloat("uShininess",shininess);
-    shader.setFloat("uSpecularStrength",specularStrength);
+    shader.setInt("material.albedoTexture",0);
+    shader.setVec4("material.baseColor",baseColor);
+    shader.setFloat("material.shininess",shininess);
+    shader.setFloat("material.specularStrength",specularStrength);
 }
