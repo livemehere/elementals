@@ -31,8 +31,8 @@ in vec3 vPos;
 
 uniform sampler2D uAlbedoTexture;
 uniform vec4 uBaseColor;
-uniform float uShiniess = 32.0;
-uniform float uSpecularStrength = 1.0;
+uniform float uShininess;
+uniform float uSpecularStrength;
 
 out vec4 FragColor;
 
@@ -68,7 +68,7 @@ vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDi
     /** specular */
     vec3 reflectDir = reflect(-lightDir, normal);
     float specularAngle = max(dot(viewDir, reflectDir),0.0);
-    float specularFactor = pow(specularAngle, uShiniess);
+    float specularFactor = pow(specularAngle, uShininess);
 
     vec3 specular = color * intensity * attenuation * specularFactor * uSpecularStrength;
 

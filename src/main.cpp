@@ -70,7 +70,7 @@ int main() {
                .scale = {1.0f,1.0f,1.0f},
            },
            .mesh = &resourceManager.getCubeMesh(),
-           .material = &unlitMaterial,
+           .material = &orange,
        });
 
         // light

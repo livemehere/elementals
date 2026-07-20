@@ -6,6 +6,19 @@
 
 #include "ShaderStage.h"
 
+namespace {
+    void validate_location(const char* name, GLint loc) {
+        if (loc == -1) {
+            throw std::runtime_error(
+                std::format(
+                    "Uniform '{}' not found",
+                    name
+                    )
+                );
+        }
+    }
+}
+
 Shader::Shader(const std::string &vsPath, const std::string &fsPath) {
     const ShaderStage vs(GL_VERTEX_SHADER,vsPath);
     const ShaderStage fs(GL_FRAGMENT_SHADER,fsPath);
@@ -38,26 +51,31 @@ Shader::Shader(const std::string &vsPath, const std::string &fsPath) {
 
 void Shader::setInt(const char *name, const int value) const {
     const GLint loc = glGetUniformLocation(id_, name);
+    validate_location(name, loc);
     glUniform1i(loc, value);
 }
 
 void Shader::setFloat(const char *name, float value) const {
     const GLint loc = glGetUniformLocation(id_, name);
+    validate_location(name, loc);
     glUniform1f(loc, value);
 }
 
 void Shader::setVec3(const char *name, const glm::vec3 &value) const {
     const GLint loc = glGetUniformLocation(id_, name);
+    validate_location(name, loc);
     glUniform3fv(loc, 1, glm::value_ptr(value));
 }
 
 void Shader::setVec4(const char *name, const glm::vec4& value) const {
     const GLint loc = glGetUniformLocation(id_, name);
+    validate_location(name, loc);
     glUniform4fv(loc, 1, glm::value_ptr(value));
 }
 
 void Shader::setMat4(const char *name, const glm::mat4& value) const {
     const GLint loc = glGetUniformLocation(id_, name);
+    validate_location(name, loc);
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 }
 
