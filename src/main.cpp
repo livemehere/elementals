@@ -142,7 +142,12 @@ int main() {
             ImGui::DragFloat("pointLight.intensity", &scene.pointLights[0].intensity, 0.1f);
             ImGui::DragFloat3("pointLight.position", glm::value_ptr(scene.pointLights[0].position), 0.1f);
 
+            ImGui::SeparatorText("LitMaterial");
+            ImGui::DragFloat("shininess", &orange.shininess, 0.1f);
+            ImGui::DragFloat("specularStrength", &orange.specularStrength, 0.1f);
+
             ImGui::End();
+
             win.update();
         }
 
