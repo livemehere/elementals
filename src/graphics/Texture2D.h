@@ -2,7 +2,6 @@
 #include <span>
 #include <glad/glad.h>
 
-
 /* RGBA support only for simplicity */
 class Texture2D {
    GLuint id_ = 0;
@@ -10,6 +9,7 @@ class Texture2D {
    int height_ = 0;
 public:
    Texture2D(int width, int height, std::span<const uint8_t> pixels);
+   Texture2D(const std::string& filepath);
    ~Texture2D() {
       if (id_ != 0) {
         glDeleteTextures(1, &id_);

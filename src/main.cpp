@@ -38,13 +38,14 @@ int main() {
             255,255,255,255,
         };
         Texture2D whiteTexture{1,1,pixels};
+        Texture2D boxTexture("textures/box.png");
 
         /* lit */
         Shader litShader{"shaders/basic.vert", "shaders/lit.frag"};
         litShader.bindUniformBlock("CameraData", UniformBinding::Camera);
         litShader.bindUniformBlock("LightsData", UniformBinding::Lights);
         LitMaterial white{litShader,whiteTexture};
-        LitMaterial orange{litShader,whiteTexture, {1.0f, 0.5f, 0.3f,1.0f}};
+        LitMaterial orange{litShader,boxTexture};
 
         /* unlit */
         Shader unlitShader{"shaders/basic.vert", "shaders/unlit.frag"};
