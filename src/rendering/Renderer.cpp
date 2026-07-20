@@ -47,13 +47,15 @@ void Renderer::updateLightsBuffer(Scene& scene) {
    glBindBuffer(GL_UNIFORM_BUFFER, lightsUBO);
    GPULightingData data{};
    data.ambientLightColorIntensity = glm::vec4(scene.ambientLight.color, scene.ambientLight.intensity);
+
+   const auto pointLightCount = static_cast<size_t>(std::min(scene.pointLights.size(),MAX_POINT_LIGHTS));
    data.lightCounts = glm::ivec4(
       0,
-      static_cast<int>(std::min(scene.pointLights.size(),MAX_POINT_LIGHTS)),
+      pointLightCount,
       0,
       0
    );
-   for (int i=0; i<scene.pointLights.size(); i++) {
+   for (int i=0; i<pointLightCount; i++) {
       const PointLight& source = scene.pointLights[i];
       data.pointLights[i].colorIntensity = glm::vec4(source.color, source.intensity);
       data.pointLights[i].positionRange = glm::vec4(source.position, source.range);

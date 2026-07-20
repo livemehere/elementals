@@ -1,8 +1,5 @@
 #include "MeshRenderer.h"
 
-#include "../Renderer.h"
-#include "materials/LitMaterial.h"
-
 void MeshRenderer::render(const MeshRenderObject &object) const {
     /* material specific */
     object.material->bind();
