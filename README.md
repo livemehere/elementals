@@ -10,12 +10,18 @@ The goal is to accelerate the journey from idea to playable experience while giv
 
 ## WIP
 
+
 ### Core system ... 
 
-![img.png](docs/2.mesh-wire.png)
 
-![img.png](docs/3.mesh-normal.png)
 
-![phong-light.gif](docs/phong-light.gif)
 
-![point-lights.png](docs/point-lights.png)
+<img width="1134" height="702" alt="2 mesh-wire" src="https://github.com/user-attachments/assets/c9d6839c-f4c0-4f57-b121-b26b0cf06994" />
+
+<img width="1234" height="664" alt="3 mesh-normal" src="https://github.com/user-attachments/assets/539245a7-419b-4997-9aaf-414abe9d93ab" />
+
+<img width="720" height="404" alt="phong-light" src="https://github.com/user-attachments/assets/eb3329ad-e346-44d6-b90c-8240e2d24ad6" />
+
+<img width="1152" height="695" alt="point-lights" src="https://github.com/user-attachments/assets/0d00a799-ead5-4a89-969f-adb332812922" />
+
+<img width="960" height="540" alt="specular" src="https://github.com/user-attachments/assets/30ed3dfa-f279-480a-95a9-add3045d1a24" />
