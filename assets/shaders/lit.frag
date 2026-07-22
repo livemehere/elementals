@@ -1,12 +1,20 @@
 #version 410 core
 
 #define MAX_POINT_LIGHTS 16
+#define MAX_DIRECTIONAL_LIGHTS 4
 
 layout (std140) uniform CameraData {
     mat4 view;
     mat4 projection;
     vec4 position;
 } camera;
+
+struct DirectionalLight {
+    // xyz, w(x)
+    vec4 direction;
+    // rgb, w
+    vec4 colorIntensity;
+};
 
 struct PointLight {
     // xyz, w
@@ -22,6 +30,7 @@ layout (std140) uniform LightsData {
 
     // x: directionalLight / y : pointLight
     ivec4 lightCounts;
+    DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
     PointLight pointLights[MAX_POINT_LIGHTS];
 } lights;
 

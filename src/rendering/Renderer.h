@@ -3,6 +3,7 @@
 #include "mesh/MeshRenderer.h"
 
 constexpr std::size_t MAX_POINT_LIGHTS = 16;
+constexpr std::size_t MAX_DIRECTIONAL_LIGHTS = 4;
 
 namespace UniformBinding {
     constexpr GLuint Camera = 0;
@@ -20,6 +21,11 @@ struct alignas(16) GPUPointLight {
     glm::vec4 colorIntensity;
 };
 
+struct alignas(16) GPUDirectionalLLight {
+    glm::vec4 direction;
+    glm::vec4 colorIntensity;
+};
+
 struct alignas(16) GPULightingData {
     // rgb : color
     // w : intensity
@@ -27,6 +33,7 @@ struct alignas(16) GPULightingData {
 
     // x: directionalLight / y : pointLight
     glm::ivec4 lightCounts;
+    std::array<GPUDirectionalLLight,MAX_DIRECTIONAL_LIGHTS> directionalLights;
     std::array<GPUPointLight,MAX_POINT_LIGHTS> pointLights;
 };
 

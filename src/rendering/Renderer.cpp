@@ -49,13 +49,22 @@ void Renderer::updateLightsBuffer(Scene& scene) {
    GPULightingData data{};
    data.ambientLightColorIntensity = glm::vec4(scene.ambientLight.color, scene.ambientLight.intensity);
 
+   const auto directionalLightCount = static_cast<size_t>(std::min(scene.directionalLights.size(),MAX_DIRECTIONAL_LIGHTS));
    const auto pointLightCount = static_cast<size_t>(std::min(scene.pointLights.size(),MAX_POINT_LIGHTS));
+
    data.lightCounts = glm::ivec4(
-      0,
+      directionalLightCount,
       pointLightCount,
       0,
       0
    );
+
+   for (int i=0; i<directionalLightCount; i++) {
+      const DirectionalLight& source = scene.directionalLights[i];
+      data.directionalLights[i].colorIntensity = glm::vec4(source.color, source.intensity);
+      data.directionalLights[i].direction = glm::vec4(source.direction, 0.0f);
+   }
+
    for (int i=0; i<pointLightCount; i++) {
       const PointLight& source = scene.pointLights[i];
       data.pointLights[i].colorIntensity = glm::vec4(source.color, source.intensity);

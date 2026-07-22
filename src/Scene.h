@@ -13,6 +13,7 @@ public:
     /* Lights */
     AmbientLight ambientLight;
     std::vector<PointLight> pointLights;
+    std::vector<DirectionalLight> directionalLights;
 
     Scene() = default;
     ~Scene() = default;
