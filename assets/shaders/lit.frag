@@ -72,7 +72,7 @@ vec3 calculateDirectionalLight(DirectionalLight light, vec3 albedo, vec3 normal,
         vec3 reflectDir = reflect(-lightDir, normal);
         float specularAngle = max(dot(reflectDir, viewDir), 0.0);
         float specularFactor = pow(specularAngle, material.shininess);
-        specular *= color * intensity * specularFactor * material.specularStrength * specularMask;
+        specular = color * intensity * specularFactor * material.specularStrength * specularMask;
     }
 
     return diffuse + specular;
