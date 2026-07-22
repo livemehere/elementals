@@ -22,3 +22,5 @@ The goal is to accelerate the journey from idea to playable experience while giv
 <img width="1152" height="695" alt="point-lights" src="https://github.com/user-attachments/assets/0d00a799-ead5-4a89-969f-adb332812922" />
 
 <img width="960" height="540" alt="specular" src="https://github.com/user-attachments/assets/30ed3dfa-f279-480a-95a9-add3045d1a24" />
+
+<img width="960" height="540" alt="spotlight" src="https://github.com/user-attachments/assets/e50a4116-e037-4735-9760-aa34370bd617" />
