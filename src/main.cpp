@@ -75,6 +75,7 @@ int main() {
            .material = &boxMaterial,
        });
 
+        scene.ambientLight.intensity = 3.0f;
         // light
         scene.pointLights.push_back({
             .position = {1.5f, 1.0f,0.0f},
@@ -86,7 +87,7 @@ int main() {
         scene.directionalLights.push_back({
             .direction = glm::vec3{0.0f, -1.0f, 0.0f},
             .color = glm::vec3{1.0f},
-           .intensity = 1.0f
+           .intensity = 0.1f
         });
 
        //  scene.pointLights.push_back({
@@ -157,8 +158,14 @@ int main() {
                 }
             }
 
-            ImGui::SeparatorText("Light");
+            ImGui::SeparatorText("Ambient Light");
             ImGui::DragFloat("ambientLight.intensity", &scene.ambientLight.intensity, 0.1f);
+
+            ImGui::SeparatorText("Directional Light");
+            ImGui::DragFloat3("directionalLight.direction", glm::value_ptr(scene.directionalLights[0].direction), 0.1f);
+            ImGui::DragFloat("directionalLight.intensity", &scene.directionalLights[0].intensity, 0.1f);
+
+            ImGui::SeparatorText("Point Light");
             ImGui::DragFloat("pointLight.intensity", &scene.pointLights[0].intensity, 0.1f);
             ImGui::DragFloat3("pointLight.position", glm::value_ptr(scene.pointLights[0].position), 0.1f);
 

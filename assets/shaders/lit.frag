@@ -58,7 +58,27 @@ vec3 calculateAmbient(vec3 albedo)
     return albedo * color * intensity;
 }
 
-vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDir)
+vec3 calculateDirectionalLight(DirectionalLight light, vec3 albedo, vec3 normal, vec3 viewDir, float specularMask)
+{
+    /** diffuse */
+    vec3 lightDir = normalize(-light.direction.xyz);
+    vec3 color = light.colorIntensity.rgb;
+    float intensity = light.colorIntensity.w;
+    float diffuseFactor = max(dot(normal, lightDir),0.0);
+    vec3 diffuse = albedo * color * intensity * diffuseFactor;
+
+    vec3 specular = vec3(0.0);
+    if(diffuseFactor > 0.0){
+        vec3 reflectDir = reflect(-lightDir, normal);
+        float specularAngle = max(dot(reflectDir, viewDir), 0.0);
+        float specularFactor = pow(specularAngle, material.shininess);
+        specular *= color * intensity * specularFactor * material.specularStrength * specularMask;
+    }
+
+    return diffuse + specular;
+}
+
+vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDir, float specularMask)
 {
     /** diffuse */
     vec3 color = light.colorIntensity.rgb;
@@ -85,11 +105,8 @@ vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDi
     float specularAngle = max(dot(viewDir, reflectDir),0.0);
     float specularFactor = pow(specularAngle, material.shininess);
 
-    float specularMask = 0.0;
     vec3 specular = color * intensity * attenuation * specularFactor * material.specularStrength;
-    if(material.hasSpecularMap != 0){
-       specularMask = texture(material.specular,vTexCoord).r;
-    }
+
 
     return diffuse + specular * specularMask;
 }
@@ -106,8 +123,19 @@ void main()
     vec3 normal = normalize(vNormal);
     vec3 viewDir = normalize(camera.position.xyz - vPos);
     int pointLightCount = min(lights.lightCounts.y,MAX_POINT_LIGHTS);
+    int directionalLightCount = min(lights.lightCounts.x,MAX_DIRECTIONAL_LIGHTS);
+
+    float specularMask = 0.0;
+    if(material.hasSpecularMap != 0){
+        specularMask = texture(material.specular,vTexCoord).r;
+    }
+
+    for(int i=0; i<directionalLightCount; i++){
+        result += calculateDirectionalLight(lights.directionalLights[i], albedo, normal, viewDir, specularMask);
+    }
+
     for(int i=0; i<pointLightCount; i++){
-       result += calculatePointLight(lights.pointLights[i], albedo, normal, viewDir);
+       result += calculatePointLight(lights.pointLights[i], albedo, normal, viewDir, specularMask);
     }
 
     float alpha = textureColor.a * material.baseColor.a;
