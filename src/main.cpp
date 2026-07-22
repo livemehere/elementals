@@ -75,7 +75,7 @@ int main() {
            .material = &boxMaterial,
        });
 
-        scene.ambientLight.intensity = 3.0f;
+        scene.ambientLight.intensity = 0.1f;
         // light
         scene.pointLights.push_back({
             .position = {1.5f, 1.0f,0.0f},

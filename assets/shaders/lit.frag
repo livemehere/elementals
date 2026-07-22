@@ -94,21 +94,20 @@ vec3 calculatePointLight(PointLight light, vec3 albedo, vec3 normal, vec3 viewDi
     }
 
     vec3 lightDir = toLight / max(distance, 0.0001);
-    float diffuseFactor = max(dot(normal, lightDir), 0);
+    float diffuseFactor = max(dot(normal, lightDir), 0.0);
     float distanceNormal = distance / range;
     float attenuation = 1.0 - smoothstep(0.0, 1.0, distanceNormal);
-
     vec3 diffuse = albedo * color * intensity * diffuseFactor * attenuation;
 
-    /** specular */
-    vec3 reflectDir = reflect(-lightDir, normal);
-    float specularAngle = max(dot(viewDir, reflectDir),0.0);
-    float specularFactor = pow(specularAngle, material.shininess);
+    vec3 specular = vec3(0.0);
+    if(diffuseFactor > 0.0){
+        vec3 reflectDir = reflect(-lightDir, normal);
+        float specularAngle = max(dot(viewDir, reflectDir),0.0);
+        float specularFactor = pow(specularAngle, material.shininess);
+        specular = color * intensity * attenuation * specularFactor * material.specularStrength * specularMask;
+    }
 
-    vec3 specular = color * intensity * attenuation * specularFactor * material.specularStrength;
-
-
-    return diffuse + specular * specularMask;
+    return diffuse + specular;
 }
 
 void main()
